@@ -37,26 +37,6 @@
       background: var(--bg-dark);
       color: var(--text-dark);
     }
-    body.dark .card,
-    body.dark .card h2,
-    body.dark .card h3,
-    body.dark .block,
-    body.dark .content,
-    body.dark .controls,
-    body.dark button.lang-btn {
-      color: var(--text-dark);
-      background: var(--bg-dark);
-    }
-    body.dark .card {
-      border-color: var(--text-dark);
-    }
-    body.dark .controls {
-      background: #2b353b;
-    }
-    body.dark button.lang-btn {
-      background: #2b353b;
-      border-color: var(--text-dark);
-    }
     .container {
       display: flex;
       justify-content: center;
@@ -547,6 +527,7 @@
     let current = 0, showEnglish = false;
     const card = document.getElementById('itinerary-card');
     const contentDiv = card.querySelector('.content');
+    const controls = card.querySelector('.controls');
     const toggleBtn = document.getElementById('toggleLangBtn');
 
     function render() {
