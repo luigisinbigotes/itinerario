@@ -3,7 +3,7 @@ self.addEventListener("install", event => {
   event.waitUntil(
     caches.open("uk-trip-cache").then(cache => {
       return cache.addAll([
-        "./itinerario_uk_2025_noclickflash.html",
+        "./index.html",
         "./manifest.json"
       ]);
     })
