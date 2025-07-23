@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Itinerario UK 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
     :root {
       --color-london: #296147;
       --color-edinburgh: #28406b;
-      --color-inverness: #B89A35;
-      --color-highlands: #A88344;
+      --color-inverness: #b89a35;
+      --color-highlands: #a88344;
       --color-neutral: #444;
-      --bg-light: #FCFCFC;
-      --bg-dark: #222A2E;
+      --bg-light: #fcfcfc;
+      --bg-dark: #222a2e;
       --text-light: #131313;
-      --text-dark: #222A2E;
+      --text-dark: #f5f5f5;
       --border-width: 10px;
     }
-    html, body {
+    html,
+    body {
       height: 100%;
       margin: 0;
       padding: 0;
-      font-family: 'JetBrains Mono', 'Fira Mono', 'Courier New', Courier, monospace;
+      font-family: 'JetBrains Mono', 'Fira Mono', 'Courier New', Courier,
+        monospace;
       background: var(--bg-light);
       color: var(--text-light);
       transition: background 0.4s, color 0.4s;
+      overflow: hidden;
     }
     body.dark {
       background: var(--bg-dark);
@@ -35,72 +41,134 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100dvh;
+      height: 100vh;
+      padding: 0.5em;
+      box-sizing: border-box;
     }
     .card {
-      width: 98vw;
-      max-width: 660px;
+      position: relative;
+      width: 95vw;
+      max-width: 600px;
+      height: calc(100vh - 1em);
       background: #fff;
       border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(44,50,60,0.13);
-      padding: 2.2rem 1.5rem;
+      box-shadow: 0 8px 32px rgba(44, 50, 60, 0.13);
+      padding: 3rem 1.5rem 4.5rem 1.5rem;
       border-left: var(--border-width) solid var(--color-neutral);
-      min-height: 340px;
-      margin: 0.8em 0;
-      transition: border-color 0.4s, background 0.4s;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       gap: 0.8rem;
       font-size: 1rem;
+      overflow-y: auto;
     }
-    .city-london { border-color: var(--color-london); }
-    .city-edinburgh { border-color: var(--color-edinburgh); }
-    .city-inverness { border-color: var(--color-inverness); }
-    .city-highlands { border-color: var(--color-highlands); }
-    .city-neutral { border-color: var(--color-neutral); }
-    .card h2 { margin: 0 0 0.5em 0; font-size: 1.2rem; letter-spacing: 0.02em; }
-    .card h3 { margin: 0.3em 0 0.1em 0; font-size: 1.03rem; }
-    .card .block { margin-bottom: 0.9em; white-space: pre-wrap; }
+    .city-london {
+      border-color: var(--color-london);
+    }
+    .city-edinburgh {
+      border-color: var(--color-edinburgh);
+    }
+    .city-inverness {
+      border-color: var(--color-inverness);
+    }
+    .city-highlands {
+      border-color: var(--color-highlands);
+    }
+    .city-neutral {
+      border-color: var(--color-neutral);
+    }
+    .card h2 {
+      margin: 0 0 0.5em 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      padding-bottom: 0.5em;
+      z-index: 10;
+      border-bottom: 1px solid #ddd;
+    }
+    .card h3 {
+      margin: 0.3em 0 0.1em 0;
+      font-size: 1.03rem;
+    }
+    .card .block {
+      margin-bottom: 0.9em;
+      white-space: pre-wrap;
+    }
     .controls {
-      display: flex; justify-content: space-between; margin-top: 1em; font-size: 1.10em;
-      color: #1a1a1a; user-select: none; font-weight: bold;
+      position: absolute;
+      bottom: 3.5rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+      box-sizing: border-box;
     }
-    .controls span { cursor: pointer; padding: 0.22em 1em; }
-    .controls span:active { background: #eee; border-radius: 6px; }
-    @media (max-width: 700px) {
-      .card { padding: 1.1rem 0.3rem; font-size: 0.96rem; }
+    .controls span {
+      cursor: pointer;
+      padding: 0.3em 1em;
+      background: #eee;
+      border-radius: 8px;
+      user-select: none;
+      box-shadow: 0 0 5px rgb(0 0 0 / 0.1);
+      transition: background 0.3s;
+      font-weight: 700;
+    }
+    .controls span:active {
+      background: #ddd;
     }
     button.lang-btn {
-      font-size: 0.98em;
-      padding: 0.16em 1em;
+      position: absolute;
+      bottom: 0.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9em;
+      padding: 0.3em 1.2em;
       border: 1px solid #888;
       background: #f4f4f4;
       color: #222;
       border-radius: 6px;
       cursor: pointer;
-      margin-top: 1em;
       font-family: inherit;
+      user-select: none;
+      box-shadow: 0 0 6px rgb(0 0 0 / 0.1);
+      transition: background 0.3s;
     }
     button.lang-btn:active {
       background: #e6e6e6;
     }
+    @media (max-width: 600px) {
+      .card {
+        padding: 3rem 1rem 4.5rem 1rem;
+        font-size: 0.95rem;
+      }
+      .controls span {
+        padding: 0.25em 0.9em;
+        font-size: 0.9em;
+      }
+    }
   </style>
 </head>
 <body>
-<div class="container">
-  <div id="itinerary-card" class="card city-edinburgh">
-    <!-- Content will be injected here -->
+  <div class="container">
+    <div id="itinerary-card" class="card city-neutral">
+      <!-- Content injected by JS -->
+      <h2>Itinerario UK 2025</h2>
+      <p>Cargando contenido...</p>
+    </div>
   </div>
-</div>
-<div class="controls">
-  <span id="prev">&#8592; Anterior</span>
-  <span id="next">Siguiente &#8594;</span>
-</div>
-<script>
-// ===================== DATOS DEL ITINERARIO ==========================
-const days = [
-  {
+
+  <div class="controls">
+    <span id="prev">&#8592; Anterior</span>
+    <span id="next">Siguiente &#8594;</span>
+  </div>
+
+  <button class="lang-btn" id="toggleLangBtn">Ver en English</button>
+
+  <script>
+    // Empty JSON placeholder, load your data here
+    const days = [{
   city: 'edinburgh',
   title: "Domingo 16 de noviembre de 2025 - DIA 0",
   enTitle: "Sunday, 16 November 2025 - DAY 0",
@@ -454,46 +522,63 @@ const days = [
       content: "Medical condition  : HIV+ (on uninterrupted treatment since 2012)\nViral load         : Undetectable\nMedication         : TDF/FTC/EFV (300mg/200mg/600mg)\nKnown allergies    : Pollen\nEmergency contact  : Gabriela Forchino (sister)\n                     Tel: +54 9 2920 519036"
     }
   ]
-}
-];
-// ========== FIN DEL ITINERARIO ==========
+}];
 
-let current = 0, showEnglish = false;
-const card = document.getElementById('itinerary-card');
+    let current = 0, showEnglish = false;
+    const card = document.getElementById('itinerary-card');
+    const toggleBtn = document.getElementById('toggleLangBtn');
 
-function render() {
-  const day = days[current];
-  card.className = `card city-${day.city}`;
-  let html = `<h2>${showEnglish ? day.enTitle : day.title}</h2>`;
-  const b = showEnglish ? day.blocksEn : day.blocks;
-  for (let block of b) {
-    html += `<h3>${block.header}</h3><div class="block">${block.content.replace(/\\n/g, '<br>')}</div>`;
-  }
-  html += `<div style="text-align:right"><button class="lang-btn" onclick="toggleLang()">Ver en ${showEnglish ? 'espanol' : 'English'}</button></div>`;
-  card.innerHTML = html;
-}
-function prevDay() { if (current > 0) { current--; render(); }}
-function nextDay() { if (current < days.length - 1) { current++; render(); }}
-function toggleLang() { showEnglish = !showEnglish; render(); }
+    function render() {
+      if (days.length === 0) {
+        card.innerHTML = '<h2>No hay contenido disponible</h2>';
+        return;
+      }
+      const day = days[current];
+      card.className = `card city-${day.city}`;
+      let html = `<h2>${showEnglish ? day.enTitle : day.title}</h2>`;
+      const b = showEnglish ? day.blocksEn : day.blocks;
+      for (let block of b) {
+        html += `<h3>${block.header}</h3><div class="block">${block.content.replace(/\n/g, '<br>')}</div>`;
+      }
+      html += `<div style="text-align:center; margin-top: 1.3em;">
+        <button class="lang-btn" onclick="toggleLang()">
+          Ver en ${showEnglish ? 'español' : 'English'}
+        </button>
+      </div>`;
+      card.innerHTML = html;
+      toggleBtn.textContent = showEnglish ? 'Ver en español' : 'Ver en English';
+    }
 
-document.getElementById('prev').onclick = prevDay;
-document.getElementById('next').onclick = nextDay;
+    function prevDay() {
+      if (current > 0) { current--; render(); }
+    }
+    function nextDay() {
+      if (current < days.length - 1) { current++; render(); }
+    }
+    function toggleLang() {
+      showEnglish = !showEnglish;
+      render();
+    }
 
-render();
+    document.getElementById('prev').onclick = prevDay;
+    document.getElementById('next').onclick = nextDay;
+    toggleBtn.onclick = toggleLang;
 
-// SWIPE SUPPORT (touch events)
-let startX = 0;
-card.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-card.addEventListener('touchend', e => {
-  let dx = e.changedTouches[0].clientX - startX;
-  if (dx > 70) prevDay();
-  else if (dx < -70) nextDay();
-});
+    render();
 
-// MODO OSCURO AUTO
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.body.classList.add('dark');
-}
-</script>
+    // Swipe support
+    let startX = 0;
+    card.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+    card.addEventListener('touchend', e => {
+      let dx = e.changedTouches[0].clientX - startX;
+      if (dx > 50) prevDay();
+      else if (dx < -50) nextDay();
+    });
+
+    // Dark mode auto
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark');
+    }
+  </script>
 </body>
 </html>
