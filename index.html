@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Itinerario UK 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-london: #296147;
+      --color-edinburgh: #28406b;
+      --color-inverness: #b89a35;
+      --color-highlands: #a88344;
+      --color-neutral: #444;
+      --color-emergency: #b22222;
+      --bg-light: #fcfcfc;
+      --bg-dark: #222a2e;
+      --text-light: #131313;
+      --text-dark: #222a2e;
+      --border-width: 10px;
+      --controls-height: 60px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0; padding: 0;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.4s, color 0.4s;
+      overflow: hidden;
+    }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - var(--controls-height));
+      padding: 0.5em;
+      box-sizing: border-box;
+    }
+    .card {
+      position: relative;
+      width: 95vw;
+      max-width: 600px;
+      height: 100%;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(44, 50, 60, 0.13);
+      border-left: var(--border-width) solid var(--color-neutral);
+      display: flex;
+      flex-direction: column;
+      font-size: 1rem;
+      overflow: hidden;
+    }
+    .city-london { border-color: var(--color-london); }
+    .city-edinburgh { border-color: var(--color-edinburgh); }
+    .city-inverness { border-color: var(--color-inverness); }
+    .city-highlands { border-color: var(--color-highlands); }
+    .city-neutral { border-color: var(--color-neutral); }
+    .city-emergency { border-color: var(--color-emergency); }
+    .day-title {
+      background: #f5f5f5;
+      border-bottom: 1px solid #ccc;
+      padding: 1rem;
+      font-weight: bold;
+      font-size: 1.05rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    body.dark .day-title {
+      background: #f5f5f5;
+      border-bottom: 1px solid #555;
+      color: var(--text-dark);
+    }
+    .content {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+    }
+    .card h3 {
+      margin: 0.8em 0 0.3em 0;
+      font-size: 1.03rem;
+    }
+    .block {
+      white-space: pre-wrap;
+      margin-bottom: 1em;
+    }
+    .controls-wrapper {
+      position: fixed;
+      bottom: 0;
+      left: 0; right: 0;
+      height: var(--controls-height);
+      background: #f0f0f0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      box-sizing: border-box;
+      font-weight: 700;
+      z-index: 9999;
+    }
+    .controls-wrapper.dark {
+      background: #2b353b;
+    }
+    .controls span {
+      cursor: pointer;
+      padding: 0.4em 1em;
+      border-radius: 8px;
+      background: #eee;
+      transition: background 0.3s;
+      user-select: none;
+    }
+    .controls span:active {
+      background: #ddd;
+    }
+    button.lang-btn {
+      cursor: pointer;
+      padding: 0.4em 1em;
+      border-radius: 8px;
+      border: 1px solid #888;
+      background: #f4f4f4;
+      color: #222;
+      font-family: inherit;
+      font-weight: 600;
+      user-select: none;
+      transition: background 0.3s;
+      margin-left: auto;
+      min-width: 110px;
+      flex-shrink: 0;
+    }
+    button.lang-btn:active {
+      background: #e6e6e6;
+    }
+    body.dark button.lang-btn {
+      background: #e6e6e6;
+      border-color: var(--text-dark);
+      color: var(--text-dark);
+    }
+    @media (max-width: 600px) {
+      .card { width: 98vw; max-width: none; }
+      .controls-wrapper { height: 50px; padding: 0 1rem; }
+      .controls span {
+        padding: 0.3em 0.8em;
+        font-size: 0.9em;
+      }
+      button.lang-btn {
+        min-width: 90px;
+        padding: 0.3em 0.9em;
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="itinerary-card" class="card city-neutral">
+      <div class="content">
+        <p>Cargando contenido...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-wrapper" id="controls-wrapper">
+    <span id="prev">&#8592; Anterior</span>
+    <span id="next">Siguiente &#8594;</span>
+    <button class="lang-btn" id="toggleLangBtn">Ver en English</button>
+  </div>
+
+  <script>
+    const days = [{
+  city: 'edinburgh',
+  title: "Domingo 16/11/2025 - DIA 0",
+  enTitle: "Sunday, 16 November 2025 - DAY 0",
+  blocks: [
+    {
+      header: "VUELO INTERNACIONAL:",
+      content: "- British Airways BA0248\n- Salida: Buenos Aires Ezeiza (Terminal P) - 13:35\n- Llegada: Londres Heathrow (Terminal 5) - 08:35 (+1)\n- Codigo de reserva: XQOSQR\n- Asientos: Confirmados\n- Equipaje: 1 carry-on + 1 maleta despachada 23 kg por persona"
+    },
+    {
+      header: "OBSERVACIONES:",
+      content: "- Llegar al aeropuerto 3 horas antes.\n- Llevar adaptador UK/EU.\n- Activar tarjetas de credito para uso internacional."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "INTERNATIONAL FLIGHT:",
+      content: "- British Airways BA0248\n- Departure: Buenos Aires Ezeiza (Terminal P) - 13:35\n- Arrival: London Heathrow (Terminal 5) - 08:35 (+1)\n- Booking code: XQOSQR\n- Seats: Confirmed\n- Luggage: 1 carry-on + 1 checked bag 23 kg per person"
+    },
+    {
+      header: "NOTES:",
+      content: "- Arrive at the airport 3 hours early.\n- Bring UK/EU plug adapter.\n- Enable credit cards for international use."
+    }
+  ]
+},
+{
+  city: 'edinburgh',
+  title: "Lunes 17/11/2025 - DIA 1",
+  enTitle: "Monday, 17 November 2025 - DAY 1",
+  blocks: [
+    {
+      header: "LLEGADA A LONDRES Y CONEXION A EDIMBURGO",
+      content: "- Llegada vuelo BA0248 a Heathrow 08:35.\n- Vuelo: British Airways BA1450\n- Salida: Londres Heathrow (Terminal 5) - 12:55\n- Llegada: Edimburgo (EDI) - 14:25\n- Codigo de reserva: XR9EO6\n- Asientos: 25A y 25B\n- Equipaje permitido igual que internacional."
+    },
+    {
+      header: "TRASLADO ALOJAMIENTO:",
+      content: "- Taxi o Airlink 100 bus (Waverley Bridge, 5.50 GBP p/p)."
+    },
+    {
+      header: "ALOJAMIENTO EDIMBURGO:",
+      content: "- The Riddoch Apartment by National Trust Scotland\n- 477B Lawnmarket, Edinburgh EH1 2NT, UK\n- Check-in: despues de 15:00 h"
+    },
+    {
+      header: "OBSERVACIONES:",
+      content: "- Guardar todos los tickets y reservas offline.\n- Verificar clave/codigo acceso al apartamento."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "ARRIVAL IN LONDON AND CONNECTION TO EDINBURGH",
+      content: "- Arrival from BA0248 at Heathrow 08:35.\n- Flight: British Airways BA1450\n- Departure: London Heathrow (Terminal 5) - 12:55\n- Arrival: Edinburgh (EDI) - 14:25\n- Booking code: XR9EO6\n- Seats: 25A and 25B\n- Luggage allowance same as international flight."
+    },
+    {
+      header: "TRANSFER TO ACCOMMODATION:",
+      content: "- Taxi or Airlink 100 bus (Waverley Bridge, 5.50 GBP per person)."
+    },
+    {
+      header: "EDINBURGH ACCOMMODATION:",
+      content: "- The Riddoch Apartment by National Trust Scotland\n- 477B Lawnmarket, Edinburgh EH1 2NT, UK\n- Check-in: after 15:00"
+    },
+    {
+      header: "NOTES:",
+      content: "- Save all tickets and reservations offline.\n- Confirm apartment access code/key."
+    }
+  ]
+},
+{
+  city: 'edinburgh',
+  title: "Martes 18/11/2025 - DIA 2",
+  enTitle: "Tuesday, 18 November 2025 - DAY 2",
+  blocks: [
+    {
+      header: "EDIMBURGO",
+      content: "- Desayuno en el apartamento o cerca de Lawnmarket.\n- Sugerencias de visitas: The Writers' Museum, St Giles' Cathedral, Royal Mile, Greyfriars Kirkyard, The Real Mary King's Close, National Museum of Scotland, Grassmarket, Princes Street Gardens y Scott Monument.\n- Comidas: Oink Victoria Street, Ting Thai Teviot, Wings o Clam Shell.\n- Tiempo libre para recorrer Old Town y/o hacer compras.\n- Cena: The Witchery o Grassmarket.\n- Llevar abrigo impermeable, clima cambiante.\n- Consultar agenda para tours nocturnos de fantasmas."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "EDINBURGH",
+      content: "- Breakfast at the apartment or nearby.\n- Suggested visits: The Writers' Museum, St Giles' Cathedral, Royal Mile, Greyfriars Kirkyard, The Real Mary King's Close, National Museum of Scotland, Grassmarket, Princes Street Gardens and Scott Monument.\n- Food: Oink Victoria Street, Ting Thai Teviot, Wings or Clam Shell.\n- Free time for exploring Old Town or shopping.\n- Dinner: The Witchery or Grassmarket.\n- Bring a rain jacket, weather changes quickly.\n- Check schedule for evening ghost tours."
+    }
+  ]
+},
+{
+  city: 'edinburgh',
+  title: "Miércoles 19/11/2025 - DIA 3",
+  enTitle: "Wednesday, 19 November 2025 - DAY 3",
+  blocks: [
+    {
+      header: "EDIMBURGO",
+      content: "- Caminata a Calton Hill, Arthur's Seat o Royal Observatory.\n- Museos o galerías si llueve.\n- Tour guiado (Outlander, etc.) si reservado.\n- Almuerzo en Stockbridge Market o Maki & Ramen.\n- Cena en Old Town o New Town.\n- Revisar estado de reservas para auto (si aplica)."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "EDINBURGH",
+      content: "- Walk to Calton Hill, Arthur's Seat or Royal Observatory.\n- Museums or galleries if rainy.\n- Guided tour (Outlander, etc.) if booked.\n- Lunch at Stockbridge Market or Maki & Ramen.\n- Dinner in Old Town or New Town.\n- Check car rental reservation status (if needed)."
+    }
+  ]
+},
+{
+  city: 'edinburgh',
+  title: "Jueves 20/11/2025 - DIA 4",
+  enTitle: "Thursday, 20 November 2025 - DAY 4",
+  blocks: [
+    {
+      header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
+      content: "- Salida temprano a Wallace National Monument (Stirling).\n- Luego, Midhope Castle (Lallybroch, Outlander), reservar acceso.\n- Finalizar en Rosslyn Chapel (reserva recomendada).\n- Regreso a Edimburgo.\n- Llevar licencia internacional y pasaporte para el alquiler.\n- Revisar gasolina antes de devolver el auto (lleno)."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "EDINBURGH ROADTRIP (if renting car)",
+      content: "- Early departure to Wallace National Monument (Stirling).\n- Then, Midhope Castle (Lallybroch, Outlander), reserve access.\n- Finish at Rosslyn Chapel (reservation recommended).\n- Return to Edinburgh.\n- Bring international driving permit and passport for rental.\n- Check fuel before returning the car (full tank)."
+    }
+  ]
+},
+{
+  city: 'edinburgh',
+  title: "Viernes 21/11/2025 - DIA 5",
+  enTitle: "Friday, 21 November 2025 - DAY 5",
+  blocks: [
+    {
+      header: "EDIMBURGO - INVERNESS",
+      content: "- Tren: Edimburgo Waverley a Inverness (ScotRail)\n  Salida 10:32 - Llegada 14:16\n- Tipo de ticket: Anytime Day Single. Código de reserva: Ver PDF.\n- Alojamiento: Riverbank Studio, 55 Huntly St, Inverness.\n- Tarde libre para recorrer la ciudad.\n- Revisar punto de encuentro para tour del sábado."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "EDINBURGH - INVERNESS",
+      content: "- Train: Edinburgh Waverley to Inverness (ScotRail)\n  Departure 10:32 - Arrival 14:16\n- Ticket: Anytime Day Single. Booking code: see PDF.\n- Accommodation: Riverbank Studio, 55 Huntly St, Inverness.\n- Free afternoon to explore the city.\n- Check meeting point for Saturday's tour."
+    }
+  ]
+},
+{
+  city: 'highlands',
+  title: "Sábado 22/11/2025 - DIA 6",
+  enTitle: "Saturday, 22 November 2025 - DAY 6",
+  blocks: [
+    {
+      header: "INVERNESS - TOUR SKYE Y EILEAN DONAN",
+      content: "- Tour con Rabbie's Tours, salida 08:00 desde Inverness Cathedral Bus Stop.\n- Código de reserva: 143745905, pago realizado £136.\n- Llevar ropa de abrigo e impermeable, snacks y cámara.\n- Regreso por la tarde/noche."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "INVERNESS - SKYE & EILEAN DONAN TOUR",
+      content: "- Tour with Rabbie's Tours, departs 08:00 from Inverness Cathedral Bus Stop.\n- Booking code: 143745905, paid £136.\n- Bring warm and waterproof clothing, snacks, and camera.\n- Return in the evening."
+    }
+  ]
+},
+{
+  city: 'inverness',
+  title: "Domingo 23/11/2025 - DIA 7",
+  enTitle: "Sunday, 23 November 2025 - DAY 7",
+  blocks: [
+    {
+      header: "INVERNESS (DIA LIBRE)",
+      content: "- Opciones: Loch Ness (Urquhart Castle), alquiler de bici, pubs.\n- Música en vivo en Hootananny.\n- Noche extra confirmada en Inverness."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "INVERNESS (FREE DAY)",
+      content: "- Options: Loch Ness (Urquhart Castle), rent a bike, pubs.\n- Live music at Hootananny.\n- Extra night confirmed in Inverness."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Lunes 24/11/2025 - DIA 8",
+  enTitle: "Monday, 24 November 2025 - DAY 8",
+  blocks: [
+    {
+      header: "INVERNESS - LONDRES",
+      content: "- Tren: LNER Advance Single, salida 07:55, llegada 15:49 Kings Cross.\n  Asientos: Coach H, 81 y 82. Código de reserva: 25SM0NXUC0\n- Alojamiento: 343 Kensington High St, check-in después de 15:00."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "INVERNESS - LONDON",
+      content: "- Train: LNER Advance Single, departure 07:55, arrival 15:49 Kings Cross.\n  Seats: Coach H, 81 and 82. Booking ref: 25SM0NXUC0\n- Accommodation: 343 Kensington High St, check-in after 15:00."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Martes 25/11/2025 - DIA 9",
+  enTitle: "Tuesday, 25 November 2025 - DAY 9",
+  blocks: [
+    {
+      header: "LONDRES",
+      content: "- Recorrer Holland Park, Kensington Gardens, Notting Hill.\n- Musical: Les Misérables, Sondheim Theatre, 19:30.\n  Asientos: STALLS K15 y K16. Código: TFDQN9D. Precio: £310."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "LONDON",
+      content: "- Visit Holland Park, Kensington Gardens, Notting Hill.\n- Musical: Les Misérables, Sondheim Theatre, 19:30.\n  Seats: STALLS K15 and K16. Booking: TFDQN9D. Price: £310."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Miércoles 26/11/2025 - DIA 10",
+  enTitle: "Wednesday, 26 November 2025 - DAY 10",
+  blocks: [
+    {
+      header: "LONDRES",
+      content: "- Museos: Victoria and Albert, Science Museum, Natural History Museum.\n- Mercados: Portobello, Borough Market, Spitalfields.\n- Puntos de interés: Royal Courts of Justice, St Martin-in-the-Fields, Big Ben, Westminster.\n- Reservar Sky Garden o Torre de Londres si interesa.\n- Revisar clima y reservar actividades cubiertas si llueve."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "LONDON",
+      content: "- Museums: Victoria and Albert, Science Museum, Natural History Museum.\n- Markets: Portobello, Borough Market, Spitalfields.\n- Sights: Royal Courts of Justice, St Martin-in-the-Fields, Big Ben, Westminster.\n- Book Sky Garden or Tower of London if interested.\n- Check weather and book indoor activities if raining."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Jueves 27/11/2025 - DIA 11",
+  enTitle: "Thursday, 27 November 2025 - DAY 11",
+  blocks: [
+    {
+      header: "LONDRES",
+      content: "- Excursión posible: Windsor y Stonehenge (tour Evan Evans si reservado).\n- Alternativa: South Bank, London Eye, Tate Modern.\n- Confirmar y llevar reserva del tour si aplica."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "LONDON",
+      content: "- Possible excursion: Windsor and Stonehenge (Evan Evans tour if booked).\n- Alternative: South Bank, London Eye, Tate Modern.\n- Confirm and bring your tour booking if any."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Viernes 28/11/2025 - DIA 12",
+  enTitle: "Friday, 28 November 2025 - DAY 12",
+  blocks: [
+    {
+      header: "EXCURSIÓN A WINDSOR",
+      content: "- Tren: Paddington -> Windsor & Eton Central (comprar ticket Off-Peak Day Return).\n- Entrada Castillo de Windsor, 11:00, referencia 6365074, 2 adultos.\n- Regreso en tren a Londres por la tarde."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "WINDSOR DAY TRIP",
+      content: "- Train: Paddington -> Windsor & Eton Central (buy Off-Peak Day Return ticket).\n- Windsor Castle entry, 11:00, reference 6365074, 2 adults.\n- Return to London by train in the afternoon."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Sábado 29/11/2025 - DIA 13",
+  enTitle: "Saturday, 29 November 2025 - DAY 13",
+  blocks: [
+    {
+      header: "LONDRES",
+      content: "- Mercados y tiendas: Camden Market, Brick Lane, Liberty London, Harrods.\n- Espacios verdes: St Jamess Park, Regents Canal, Little Venice.\n- Experiencia especial: Té de la tarde en Fortnum & Mason, The Ritz o The Rubens."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "LONDON",
+      content: "- Markets and shops: Camden Market, Brick Lane, Liberty London, Harrods.\n- Parks: St Jamess Park, Regents Canal, Little Venice.\n- Special experience: Afternoon tea at Fortnum & Mason, The Ritz or The Rubens."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Domingo 30/11/2025 - DIA 14",
+  enTitle: "Sunday, 30 November 2025 - DAY 14",
+  blocks: [
+    {
+      header: "LONDRES",
+      content: "- Museos, tiendas y paseos por zonas emblemáticas.\n- Posible visita: Sky Garden (reserva online si aún no lo hiciste)."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "LONDON",
+      content: "- Museums, shopping and sightseeing in classic areas.\n- Possible visit: Sky Garden (book online if not yet reserved)."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Lunes 1/12/2025 - DIA 15",
+  enTitle: "Monday, 1 December 2025 - DAY 15",
+  blocks: [
+    {
+      header: "LONDRES",
+      content: "- Día libre para últimas compras y paseos.\n- Revisar reservas, chequear equipaje y transporte al aeropuerto."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "LONDON",
+      content: "- Free day for last shopping and sightseeing.\n- Review bookings, check luggage and airport transport."
+    }
+  ]
+},
+{
+  city: 'london',
+  title: "Martes 2/12/2025 - DIA 16",
+  enTitle: "Tuesday, 2 December 2025 - DAY 16",
+  blocks: [
+    {
+      header: "CHECK-OUT Y REGRESO",
+      content: "- Check-out: 343 Kensington High St, antes de las 11:00.\n- Traslado al aeropuerto: Tube District/Circle Line hasta Earls Court, luego Piccadilly Line hasta Heathrow, o taxi/Uber.\n- Vuelo: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n- Código de reserva: XQOSQR.\n- Llegar a Heathrow al menos 3 horas antes del vuelo."
+    }
+  ],
+  blocksEn: [
+    {
+      header: "CHECK-OUT AND RETURN",
+      content: "- Check-out: 343 Kensington High St, before 11:00.\n- Airport transfer: Tube District/Circle Line to Earls Court, then Piccadilly Line to Heathrow, or taxi/Uber.\n- Flight: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n- Booking code: XQOSQR.\n- Arrive at Heathrow at least 3 hours before your flight."
+    }
+  ]
+},
+{
+  city: 'neutral',
+  title: "Miércoles 3/12/2025 - DIA 17",
+  enTitle: "Wednesday, 3 December 2025 - DAY 17",
+  blocks: [
+    {
+      header: "LLEGADA A BUENOS AIRES",
+      content: "- Llegada vuelo BA0249 a Ezeiza: 11:50 hs.\n- Fin del viaje!"
+    }
+  ],
+  blocksEn: [
+    {
+      header: "ARRIVAL IN BUENOS AIRES",
+      content: "- Arrival of flight BA0249 at Ezeiza: 11:50 am.\n- End of the trip!"
+    }
+  ]
+},
+{
+  city: 'neutral',
+  title: "INFORMACION MEDICA Y CONTACTO DE EMERGENCIA",
+  enTitle: "MEDICAL INFORMATION & EMERGENCY CONTACT",
+  blocks: [
+    {
+      header: "",
+      content: "Condicion medica   : HIV+ (en tratamiento ininterrumpido desde 2012)\nCarga viral        : Indetectable\nMedicacion         : TDF/FTC/EFV (300mg/200mg/600mg)\nAlergias conocidas : Polen\nContacto urgente   : Gabriela Forchino (hermana)\n                     Tel: +54 9 2920 519036"
+    }
+  ],
+  blocksEn: [
+    {
+      header: "",
+      content: "Medical condition  : HIV+ (on uninterrupted treatment since 2012)\nViral load         : Undetectable\nMedication         : TDF/FTC/EFV (300mg/200mg/600mg)\nKnown allergies    : Pollen\nEmergency contact  : Gabriela Forchino (sister)\n                     Tel: +54 9 2920 519036"
+    }
+  ]
+}];
+
+    let current = 0, showEnglish = false;
+    const card = document.getElementById('itinerary-card');
+    const contentDiv = card.querySelector('.content');
+    const controlsWrapper = document.getElementById('controls-wrapper');
+    const toggleBtn = document.getElementById('toggleLangBtn');
+
+    function render() {
+      if (days.length === 0) {
+        contentDiv.innerHTML = '<p>No hay contenido disponible</p>';
+        return;
+      }
+      const day = days[current];
+      card.className = `card city-${day.city || 'neutral'}`;
+      let html = `<div class="day-title">${showEnglish ? day.enTitle : day.title}</div>`;
+      const b = showEnglish ? day.blocksEn : day.blocks;
+      for (let block of b) {
+        html += `<h3>${block.header}</h3><div class="block">${block.content.replace(/\n/g, '<br>')}</div>`;
+      }
+      contentDiv.innerHTML = html;
+      toggleBtn.textContent = showEnglish ? 'Ver en español' : 'Ver en English';
+      controlsWrapper.classList.toggle('dark', document.body.classList.contains('dark'));
+    }
+
+    function prevDay() {
+      if (current > 0) { current--; render(); }
+    }
+    function nextDay() {
+      if (current < days.length - 1) { current++; render(); }
+    }
+    function toggleLang() {
+      showEnglish = !showEnglish;
+      render();
+    }
+
+    document.getElementById('prev').onclick = prevDay;
+    document.getElementById('next').onclick = nextDay;
+    toggleBtn.onclick = toggleLang;
+
+    render();
+
+    let startX = 0;
+    card.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+    card.addEventListener('touchend', e => {
+      let dx = e.changedTouches[0].clientX - startX;
+      if (dx > 50) prevDay();
+      else if (dx < -50) nextDay();
+    });
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark');
+    }
+  </script>
+</body>
+</html>
