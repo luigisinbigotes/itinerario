@@ -182,404 +182,89 @@
   </div>
 
   <script>
-    const days = [{
-  city: 'edinburgh',
-  title: "Domingo 16/11/2025 - DIA 0",
-  enTitle: "Sunday, 16 November 2025 - DAY 0",
-  blocks: [
-    {
-      header: "VUELO INTERNACIONAL:",
-      content: "- British Airways BA0248\n- Salida: Buenos Aires Ezeiza (Terminal P) - 13:35\n- Llegada: Londres Heathrow (Terminal 5) - 08:35 (+1)\n- Codigo de reserva: XQOSQR\n- Asientos: Confirmados\n- Equipaje: 1 carry-on + 1 maleta despachada 23 kg por persona"
-    },
-    {
-      header: "OBSERVACIONES:",
-      content: "- Llegar al aeropuerto 3 horas antes.\n- Llevar adaptador UK/EU.\n- Activar tarjetas de credito para uso internacional."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "INTERNATIONAL FLIGHT:",
-      content: "- British Airways BA0248\n- Departure: Buenos Aires Ezeiza (Terminal P) - 13:35\n- Arrival: London Heathrow (Terminal 5) - 08:35 (+1)\n- Booking code: XQOSQR\n- Seats: Confirmed\n- Luggage: 1 carry-on + 1 checked bag 23 kg per person"
-    },
-    {
-      header: "NOTES:",
-      content: "- Arrive at the airport 3 hours early.\n- Bring UK/EU plug adapter.\n- Enable credit cards for international use."
-    }
-  ]
-},
-{
-  city: 'edinburgh',
-  title: "Lunes 17/11/2025 - DIA 1",
-  enTitle: "Monday, 17 November 2025 - DAY 1",
-  blocks: [
-    {
-      header: "LLEGADA A LONDRES Y CONEXION A EDIMBURGO",
-      content: "- Llegada vuelo BA0248 a Heathrow 08:35.\n- Vuelo: British Airways BA1450\n- Salida: Londres Heathrow (Terminal 5) - 12:55\n- Llegada: Edimburgo (EDI) - 14:25\n- Codigo de reserva: XR9EO6\n- Asientos: 25A y 25B\n- Equipaje permitido igual que internacional."
-    },
-    {
-      header: "TRASLADO ALOJAMIENTO:",
-      content: "- Taxi o Airlink 100 bus (Waverley Bridge, 5.50 GBP p/p)."
-    },
-    {
-      header: "ALOJAMIENTO EDIMBURGO:",
-      content: "- The Riddoch Apartment by National Trust Scotland\n- 477B Lawnmarket, Edinburgh EH1 2NT, UK\n- Check-in: despues de 15:00 h"
-    },
-    {
-      header: "OBSERVACIONES:",
-      content: "- Guardar todos los tickets y reservas offline.\n- Verificar clave/codigo acceso al apartamento."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "ARRIVAL IN LONDON AND CONNECTION TO EDINBURGH",
-      content: "- Arrival from BA0248 at Heathrow 08:35.\n- Flight: British Airways BA1450\n- Departure: London Heathrow (Terminal 5) - 12:55\n- Arrival: Edinburgh (EDI) - 14:25\n- Booking code: XR9EO6\n- Seats: 25A and 25B\n- Luggage allowance same as international flight."
-    },
-    {
-      header: "TRANSFER TO ACCOMMODATION:",
-      content: "- Taxi or Airlink 100 bus (Waverley Bridge, 5.50 GBP per person)."
-    },
-    {
-      header: "EDINBURGH ACCOMMODATION:",
-      content: "- The Riddoch Apartment by National Trust Scotland\n- 477B Lawnmarket, Edinburgh EH1 2NT, UK\n- Check-in: after 15:00"
-    },
-    {
-      header: "NOTES:",
-      content: "- Save all tickets and reservations offline.\n- Confirm apartment access code/key."
-    }
-  ]
-},
-{
-  city: 'edinburgh',
-  title: "Martes 18/11/2025 - DIA 2",
-  enTitle: "Tuesday, 18 November 2025 - DAY 2",
-  blocks: [
-    {
-      header: "EDIMBURGO",
-      content: "- Desayuno en el apartamento o cerca de Lawnmarket.\n- Sugerencias de visitas: The Writers' Museum, St Giles' Cathedral, Royal Mile, Greyfriars Kirkyard, The Real Mary King's Close, National Museum of Scotland, Grassmarket, Princes Street Gardens y Scott Monument.\n- Comidas: Oink Victoria Street, Ting Thai Teviot, Wings o Clam Shell.\n- Tiempo libre para recorrer Old Town y/o hacer compras.\n- Cena: The Witchery o Grassmarket.\n- Llevar abrigo impermeable, clima cambiante.\n- Consultar agenda para tours nocturnos de fantasmas."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "EDINBURGH",
-      content: "- Breakfast at the apartment or nearby.\n- Suggested visits: The Writers' Museum, St Giles' Cathedral, Royal Mile, Greyfriars Kirkyard, The Real Mary King's Close, National Museum of Scotland, Grassmarket, Princes Street Gardens and Scott Monument.\n- Food: Oink Victoria Street, Ting Thai Teviot, Wings or Clam Shell.\n- Free time for exploring Old Town or shopping.\n- Dinner: The Witchery or Grassmarket.\n- Bring a rain jacket, weather changes quickly.\n- Check schedule for evening ghost tours."
-    }
-  ]
-},
-{
-  city: 'edinburgh',
-  title: "Miércoles 19/11/2025 - DIA 3",
-  enTitle: "Wednesday, 19 November 2025 - DAY 3",
-  blocks: [
-    {
-      header: "EDIMBURGO",
-      content: "- Caminata a Calton Hill, Arthur's Seat o Royal Observatory.\n- Museos o galerías si llueve.\n- Tour guiado (Outlander, etc.) si reservado.\n- Almuerzo en Stockbridge Market o Maki & Ramen.\n- Cena en Old Town o New Town.\n- Revisar estado de reservas para auto (si aplica)."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "EDINBURGH",
-      content: "- Walk to Calton Hill, Arthur's Seat or Royal Observatory.\n- Museums or galleries if rainy.\n- Guided tour (Outlander, etc.) if booked.\n- Lunch at Stockbridge Market or Maki & Ramen.\n- Dinner in Old Town or New Town.\n- Check car rental reservation status (if needed)."
-    }
-  ]
-},
-{
-  city: 'edinburgh',
-  title: "Jueves 20/11/2025 - DIA 4",
-  enTitle: "Thursday, 20 November 2025 - DAY 4",
-  blocks: [
-    {
-      header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
-      content: "- Salida temprano a Wallace National Monument (Stirling).\n- Luego, Midhope Castle (Lallybroch, Outlander), reservar acceso.\n- Finalizar en Rosslyn Chapel (reserva recomendada).\n- Regreso a Edimburgo.\n- Llevar licencia internacional y pasaporte para el alquiler.\n- Revisar gasolina antes de devolver el auto (lleno)."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "EDINBURGH ROADTRIP (if renting car)",
-      content: "- Early departure to Wallace National Monument (Stirling).\n- Then, Midhope Castle (Lallybroch, Outlander), reserve access.\n- Finish at Rosslyn Chapel (reservation recommended).\n- Return to Edinburgh.\n- Bring international driving permit and passport for rental.\n- Check fuel before returning the car (full tank)."
-    }
-  ]
-},
-{
-  city: 'highlands',
-  title: "Viernes 21/11/2025 - DIA 5",
-  enTitle: "Friday, 21 November 2025 - DAY 5",
-  blocks: [
-    {
-      header: "EDIMBURGO - INVERNESS",
-      content: "- Tren: Edimburgo Waverley a Inverness (ScotRail)\n  Salida 10:32 - Llegada 14:16\n- Tipo de ticket: Anytime Day Single. Código de reserva: Ver PDF.\n- Alojamiento: Riverbank Studio, 55 Huntly St, Inverness.\n- Tarde libre para recorrer la ciudad.\n- Revisar punto de encuentro para tour del sábado."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "EDINBURGH - INVERNESS",
-      content: "- Train: Edinburgh Waverley to Inverness (ScotRail)\n  Departure 10:32 - Arrival 14:16\n- Ticket: Anytime Day Single. Booking code: see PDF.\n- Accommodation: Riverbank Studio, 55 Huntly St, Inverness.\n- Free afternoon to explore the city.\n- Check meeting point for Saturday's tour."
-    }
-  ]
-},
-{
-  city: 'highlands',
-  title: "Sábado 22/11/2025 - DIA 6",
-  enTitle: "Saturday, 22 November 2025 - DAY 6",
-  blocks: [
-    {
-      header: "INVERNESS - TOUR SKYE Y EILEAN DONAN",
-      content: "- Tour con Rabbie's Tours, salida 08:00 desde Inverness Cathedral Bus Stop.\n- Código de reserva: 143745905, pago realizado £136.\n- Llevar ropa de abrigo e impermeable, snacks y cámara.\n- Regreso por la tarde/noche."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "INVERNESS - SKYE & EILEAN DONAN TOUR",
-      content: "- Tour with Rabbie's Tours, departs 08:00 from Inverness Cathedral Bus Stop.\n- Booking code: 143745905, paid £136.\n- Bring warm and waterproof clothing, snacks, and camera.\n- Return in the evening."
-    }
-  ]
-},
-{
-  city: 'inverness',
-  title: "Domingo 23/11/2025 - DIA 7",
-  enTitle: "Sunday, 23 November 2025 - DAY 7",
-  blocks: [
-    {
-      header: "INVERNESS (DIA LIBRE)",
-      content: "- Opciones: Loch Ness (Urquhart Castle), alquiler de bici, pubs.\n- Música en vivo en Hootananny.\n- Noche extra confirmada en Inverness."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "INVERNESS (FREE DAY)",
-      content: "- Options: Loch Ness (Urquhart Castle), rent a bike, pubs.\n- Live music at Hootananny.\n- Extra night confirmed in Inverness."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Lunes 24/11/2025 - DIA 8",
-  enTitle: "Monday, 24 November 2025 - DAY 8",
-  blocks: [
-    {
-      header: "INVERNESS - LONDRES",
-      content: "- Tren: LNER Advance Single, salida 07:55, llegada 15:49 Kings Cross.\n  Asientos: Coach H, 81 y 82. Código de reserva: 25SM0NXUC0\n- Alojamiento: 343 Kensington High St, check-in después de 15:00."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "INVERNESS - LONDON",
-      content: "- Train: LNER Advance Single, departure 07:55, arrival 15:49 Kings Cross.\n  Seats: Coach H, 81 and 82. Booking ref: 25SM0NXUC0\n- Accommodation: 343 Kensington High St, check-in after 15:00."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Martes 25/11/2025 - DIA 9",
-  enTitle: "Tuesday, 25 November 2025 - DAY 9",
-  blocks: [
-    {
-      header: "LONDRES",
-      content: "- Recorrer Holland Park, Kensington Gardens, Notting Hill.\n- Musical: Les Misérables, Sondheim Theatre, 19:30.\n  Asientos: STALLS K15 y K16. Código: TFDQN9D. Precio: £310."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "LONDON",
-      content: "- Visit Holland Park, Kensington Gardens, Notting Hill.\n- Musical: Les Misérables, Sondheim Theatre, 19:30.\n  Seats: STALLS K15 and K16. Booking: TFDQN9D. Price: £310."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Miércoles 26/11/2025 - DIA 10",
-  enTitle: "Wednesday, 26 November 2025 - DAY 10",
-  blocks: [
-    {
-      header: "LONDRES",
-      content: "- Museos: Victoria and Albert, Science Museum, Natural History Museum.\n- Mercados: Portobello, Borough Market, Spitalfields.\n- Puntos de interés: Royal Courts of Justice, St Martin-in-the-Fields, Big Ben, Westminster.\n- Reservar Sky Garden o Torre de Londres si interesa.\n- Revisar clima y reservar actividades cubiertas si llueve."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "LONDON",
-      content: "- Museums: Victoria and Albert, Science Museum, Natural History Museum.\n- Markets: Portobello, Borough Market, Spitalfields.\n- Sights: Royal Courts of Justice, St Martin-in-the-Fields, Big Ben, Westminster.\n- Book Sky Garden or Tower of London if interested.\n- Check weather and book indoor activities if raining."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Jueves 27/11/2025 - DIA 11",
-  enTitle: "Thursday, 27 November 2025 - DAY 11",
-  blocks: [
-    {
-      header: "LONDRES",
-      content: "- Excursión posible: Windsor y Stonehenge (tour Evan Evans si reservado).\n- Alternativa: South Bank, London Eye, Tate Modern.\n- Confirmar y llevar reserva del tour si aplica."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "LONDON",
-      content: "- Possible excursion: Windsor and Stonehenge (Evan Evans tour if booked).\n- Alternative: South Bank, London Eye, Tate Modern.\n- Confirm and bring your tour booking if any."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Viernes 28/11/2025 - DIA 12",
-  enTitle: "Friday, 28 November 2025 - DAY 12",
-  blocks: [
-    {
-      header: "EXCURSIÓN A WINDSOR",
-      content: "- Tren: Paddington -> Windsor & Eton Central (comprar ticket Off-Peak Day Return).\n- Entrada Castillo de Windsor, 11:00, referencia 6365074, 2 adultos.\n- Regreso en tren a Londres por la tarde."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "WINDSOR DAY TRIP",
-      content: "- Train: Paddington -> Windsor & Eton Central (buy Off-Peak Day Return ticket).\n- Windsor Castle entry, 11:00, reference 6365074, 2 adults.\n- Return to London by train in the afternoon."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Sábado 29/11/2025 - DIA 13",
-  enTitle: "Saturday, 29 November 2025 - DAY 13",
-  blocks: [
-    {
-      header: "LONDRES",
-      content: "- Mercados y tiendas: Camden Market, Brick Lane, Liberty London, Harrods.\n- Espacios verdes: St Jamess Park, Regents Canal, Little Venice.\n- Experiencia especial: Té de la tarde en Fortnum & Mason, The Ritz o The Rubens."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "LONDON",
-      content: "- Markets and shops: Camden Market, Brick Lane, Liberty London, Harrods.\n- Parks: St Jamess Park, Regents Canal, Little Venice.\n- Special experience: Afternoon tea at Fortnum & Mason, The Ritz or The Rubens."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Domingo 30/11/2025 - DIA 14",
-  enTitle: "Sunday, 30 November 2025 - DAY 14",
-  blocks: [
-    {
-      header: "LONDRES",
-      content: "- Museos, tiendas y paseos por zonas emblemáticas.\n- Posible visita: Sky Garden (reserva online si aún no lo hiciste)."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "LONDON",
-      content: "- Museums, shopping and sightseeing in classic areas.\n- Possible visit: Sky Garden (book online if not yet reserved)."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Lunes 1/12/2025 - DIA 15",
-  enTitle: "Monday, 1 December 2025 - DAY 15",
-  blocks: [
-    {
-      header: "LONDRES",
-      content: "- Día libre para últimas compras y paseos.\n- Revisar reservas, chequear equipaje y transporte al aeropuerto."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "LONDON",
-      content: "- Free day for last shopping and sightseeing.\n- Review bookings, check luggage and airport transport."
-    }
-  ]
-},
-{
-  city: 'london',
-  title: "Martes 2/12/2025 - DIA 16",
-  enTitle: "Tuesday, 2 December 2025 - DAY 16",
-  blocks: [
-    {
-      header: "CHECK-OUT Y REGRESO",
-      content: "- Check-out: 343 Kensington High St, antes de las 11:00.\n- Traslado al aeropuerto: Tube District/Circle Line hasta Earls Court, luego Piccadilly Line hasta Heathrow, o taxi/Uber.\n- Vuelo: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n- Código de reserva: XQOSQR.\n- Llegar a Heathrow al menos 3 horas antes del vuelo."
-    }
-  ],
-  blocksEn: [
-    {
-      header: "CHECK-OUT AND RETURN",
-      content: "- Check-out: 343 Kensington High St, before 11:00.\n- Airport transfer: Tube District/Circle Line to Earls Court, then Piccadilly Line to Heathrow, or taxi/Uber.\n- Flight: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n- Booking code: XQOSQR.\n- Arrive at Heathrow at least 3 hours before your flight."
-    }
-  ]
-},
-{
-  city: 'neutral',
-  title: "Miércoles 3/12/2025 - DIA 17",
-  enTitle: "Wednesday, 3 December 2025 - DAY 17",
-  blocks: [
-    {
-      header: "LLEGADA A BUENOS AIRES",
-      content: "- Llegada vuelo BA0249 a Ezeiza: 11:50 hs.\n- Fin del viaje!"
-    }
-  ],
-  blocksEn: [
-    {
-      header: "ARRIVAL IN BUENOS AIRES",
-      content: "- Arrival of flight BA0249 at Ezeiza: 11:50 am.\n- End of the trip!"
-    }
-  ]
-},
-{
-  "city": "neutral",
-  "title": "RECORRIDOS — MAPAS PERSONALIZADOS",
-  "enTitle": "WALKS & ROUTES — CUSTOM MAPS",
-  "blocks": [
-    {
-      "header": "LONDRES · Recorrido Norte",
-      "content": "<a href=\"https://maps.app.goo.gl/RPpSF8MfwvzU36V99\" target=\"_blank\">Ver mapa</a>"
-    },
-    {
-      "header": "LONDRES · Kensington y Museos",
-      "content": "<a href=\"https://maps.app.goo.gl/99iH231bfqtVqrhB7\" target=\"_blank\">Ver mapa</a>"
-    },
-    {
-      "header": "LONDRES · Tiendas Departamentales y Buckingham",
-      "content": "<a href=\"https://maps.app.goo.gl/MhChcEtaKTDCtXQx8\" target=\"_blank\">Ver mapa</a>"
-    },
-    {
-      "header": "LONDRES · Centro",
-      "content": "<a href=\"https://maps.app.goo.gl/mg1tSA6xZuBRqXp37\" target=\"_blank\">Ver mapa</a>"
-    },
-    {
-      "header": "LONDRES · Highgate Cemetery y caminatas del norte",
-      "content": "<a href=\"https://maps.app.goo.gl/sJD1XBQMoFbPmUwdA\" target=\"_blank\">Ver mapa</a>"
-    },
-    {
-      "header": "EDIMBURGO · Afueras",
-      "content": "<a href=\"https://maps.app.goo.gl/RcTH3KQTg5SooMtx5\" target=\"_blank\">Ver mapa</a>"
-    }
-  ],
-  "blocksEn": [
-    {
-      "header": "LONDON · North Walk",
-      "content": "<a href=\"https://maps.app.goo.gl/RPpSF8MfwvzU36V99\" target=\"_blank\">Open map</a>"
-    },
-    {
-      "header": "LONDON · Kensington & Museums",
-      "content": "<a href=\"https://maps.app.goo.gl/99iH231bfqtVqrhB7\" target=\"_blank\">Open map</a>"
-    },
-    {
-      "header": "LONDON · Department Stores & Buckingham",
-      "content": "<a href=\"https://maps.app.goo.gl/MhChcEtaKTDCtXQx8\" target=\"_blank\">Open map</a>"
-    },
-    {
-      "header": "LONDON · Central Area",
-      "content": "<a href=\"https://maps.app.goo.gl/mg1tSA6xZuBRqXp37\" target=\"_blank\">Open map</a>"
-    },
-    {
-      "header": "LONDON · Highgate Cemetery & Far North Walks",
-      "content": "<a href=\"https://maps.app.goo.gl/sJD1XBQMoFbPmUwdA\" target=\"_blank\">Open map</a>"
-    },
-    {
-      "header": "EDINBURGH · Outskirts",
-      "content": "<a href=\"https://maps.app.goo.gl/RcTH3KQTg5SooMtx5\" target=\"_blank\">Open map</a>"
-    }
-  ]
-}
-
-  ]
-}
+    const days = [
+  {
+    "city": "edinburgh",
+    "title": "Domingo 16/11/2025 - DIA 0",
+    "enTitle": "Sunday, 16 November 2025 - DAY 0",
+    "blocks": [
+      {
+        "header": "VUELO INTERNACIONAL:",
+        "content": "- British Airways BA0248\n- Salida: Buenos Aires Ezeiza (Terminal P) - 13:35\n- Llegada: Londres Heathrow (Terminal 5) - 08:35 (+1)\n- Codigo de reserva: XQOSQR\n- Asientos: Confirmados\n- Equipaje: 1 carry-on + 1 maleta despachada 23 kg por persona"
+      },
+      {
+        "header": "OBSERVACIONES:",
+        "content": "- Llegar al aeropuerto 3 horas antes.\n- Llevar adaptador UK/EU.\n- Activar tarjetas de credito para uso internacional."
+      }
+    ],
+    "blocksEn": [
+      {
+        "header": "INTERNATIONAL FLIGHT:",
+        "content": "- British Airways BA0248\n- Departure: Buenos Aires Ezeiza (Terminal P) - 13:35\n- Arrival: London Heathrow (Terminal 5) - 08:35 (+1)\n- Booking code: XQOSQR\n- Seats: Confirmed\n- Luggage: 1 carry-on + 1 checked bag 23 kg per person"
+      },
+      {
+        "header": "NOTES:",
+        "content": "- Arrive at the airport 3 hours early.\n- Bring UK/EU plug adapter.\n- Enable credit cards for international use."
+      }
+    ]
+  },
+  {
+    "city": "neutral",
+    "title": "RECORRIDOS — MAPAS PERSONALIZADOS",
+    "enTitle": "WALKS & ROUTES — CUSTOM MAPS",
+    "blocks": [
+      {
+        "header": "LONDRES · Recorrido Norte",
+        "content": "<a href=\"https://maps.app.goo.gl/RPpSF8MfwvzU36V99\" target=\"_blank\">Ver mapa</a>"
+      },
+      {
+        "header": "LONDRES · Kensington y Museos",
+        "content": "<a href=\"https://maps.app.goo.gl/99iH231bfqtVqrhB7\" target=\"_blank\">Ver mapa</a>"
+      },
+      {
+        "header": "LONDRES · Tiendas Departamentales y Buckingham",
+        "content": "<a href=\"https://maps.app.goo.gl/MhChcEtaKTDCtXQx8\" target=\"_blank\">Ver mapa</a>"
+      },
+      {
+        "header": "LONDRES · Centro",
+        "content": "<a href=\"https://maps.app.goo.gl/mg1tSA6xZuBRqXp37\" target=\"_blank\">Ver mapa</a>"
+      },
+      {
+        "header": "LONDRES · Highgate Cemetery y caminatas del norte",
+        "content": "<a href=\"https://maps.app.goo.gl/sJD1XBQMoFbPmUwdA\" target=\"_blank\">Ver mapa</a>"
+      },
+      {
+        "header": "EDIMBURGO · Afueras",
+        "content": "<a href=\"https://maps.app.goo.gl/RcTH3KQTg5SooMtx5\" target=\"_blank\">Ver mapa</a>"
+      }
+    ],
+    "blocksEn": [
+      {
+        "header": "LONDON · North Walk",
+        "content": "<a href=\"https://maps.app.goo.gl/RPpSF8MfwvzU36V99\" target=\"_blank\">Open map</a>"
+      },
+      {
+        "header": "LONDON · Kensington & Museums",
+        "content": "<a href=\"https://maps.app.goo.gl/99iH231bfqtVqrhB7\" target=\"_blank\">Open map</a>"
+      },
+      {
+        "header": "LONDON · Department Stores & Buckingham",
+        "content": "<a href=\"https://maps.app.goo.gl/MhChcEtaKTDCtXQx8\" target=\"_blank\">Open map</a>"
+      },
+      {
+        "header": "LONDON · Central Area",
+        "content": "<a href=\"https://maps.app.goo.gl/mg1tSA6xZuBRqXp37\" target=\"_blank\">Open map</a>"
+      },
+      {
+        "header": "LONDON · Highgate Cemetery & Far North Walks",
+        "content": "<a href=\"https://maps.app.goo.gl/sJD1XBQMoFbPmUwdA\" target=\"_blank\">Open map</a>"
+      },
+      {
+        "header": "EDINBURGH · Outskirts",
+        "content": "<a href=\"https://maps.app.goo.gl/RcTH3KQTg5SooMtx5\" target=\"_blank\">Open map</a>"
+      }
+    ]
+  }
 ];
 
     let current = 0, showEnglish = false;
