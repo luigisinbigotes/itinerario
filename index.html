@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-
-<html es"="" lang="=">
+<html lang="="es">
 <head>
-<meta charset="utf-8"/>
-<title>Itinerario UK 2025</title>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
-<link href="manifest.json" rel="manifest"/>
-<script>
+  <meta charset="UTF-8" />
+  <title>Itinerario UK 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="manifest.json" />
+  <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
-  </script>
-<style>
+  
+function openMap(url) {
+  const modal = document.getElementById('map-modal');
+  const iframe = document.getElementById('map-iframe');
+  iframe.src = url;
+  modal.style.display = 'flex';
+}
+function closeMap() {
+  const modal = document.getElementById('map-modal');
+  const iframe = document.getElementById('map-iframe');
+  iframe.src = '';
+  modal.style.display = 'none';
+}
+
+</script>
+  <style>
     * {
   -webkit-tap-highlight-color: transparent;
 }
@@ -166,21 +179,23 @@
   </style>
 </head>
 <body>
-<div class="container">
-<div class="card city-neutral" id="itinerary-card">
-<div class="content">
-<p>Cargando contenido...</p>
-</div>
-</div>
-</div>
-<div class="controls-wrapper" id="controls-wrapper">
-<span id="prev">← Anterior</span>
-<span>
-<button class="lang-btn" id="toggleLangBtn">Ver en English</button>
-</span>
-<span id="next">Siguiente →</span>
-</div>
-<script>
+  <div class="container">
+    <div id="itinerary-card" class="card city-neutral">
+      <div class="content">
+        <p>Cargando contenido...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-wrapper" id="controls-wrapper">
+    <span id="prev">&#8592; Anterior</span>
+    <span>
+      <button class="lang-btn" id="toggleLangBtn">Ver en English</button>
+    </span>
+    <span id="next">Siguiente &#8594;</span>
+  </div>
+
+  <script>
     const days = [
   {
   city: 'edinburgh',
@@ -527,61 +542,61 @@
     "blocks": [
       {
         "header": "LONDRES RECORRIDO NORTE",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>ABRIR EN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>ABRIR EN MAPS</a>"
       },
       {
         "header": "KENSINGTON Y MUSEOS",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>ABRIR EN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>ABRIR EN MAPS</a>"
       },
       {
         "header": "LONDRES · DEPARTAMENTALES Y BUCKINGHAM",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>ABRIR EN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>ABRIR EN MAPS</a>"
       },
       {
         "header": "LONDRES · CENTRO",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>ABRIR EN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>ABRIR EN MAPS</a>"
       },
       {
         "header": "LONDRES · HIGHGATE CEMETERY Y RECORRIDO NORTE",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>ABRIR EN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>ABRIR EN MAPS</a>"
       },
       {
         "header": "EDIMBURGO · AFUERAS",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>ABRIR EN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>ABRIR EN MAPS</a>"
       },
       {
         "header": "EDIMBURGO · EN AUTO",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>ABRIR EN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>ABRIR EN MAPS</a>"
       }
     ],
     "blocksEn": [
       {
         "header": "LONDON NORTHERN PATH",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc')'>Open walk in modal</a><br><a href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>OPEN IN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc\')\">Open walk in modal</a><br><a href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>OPEN IN MAPS</a>"
       },
       {
         "header": "KENSINGTON AND MUSEUMS",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc')'>Open walk in modal</a><br><a href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>OPEN IN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc\')\">Open walk in modal</a><br><a href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>OPEN IN MAPS</a>"
       },
       {
         "header": "LONDON · DEPARTAMENT STORES AND BUCKINGHAM",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4')'>Open walk in modal</a><br><a href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>OPEN IN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4\')\">Open walk in modal</a><br><a href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>OPEN IN MAPS</a>"
       },
       {
         "header": "LONDON · DOWNTOWN",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8')'>Open walk in modal</a><br><a href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>OPEN IN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Open walk in modal</a><br><a href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>OPEN IN MAPS</a>"
       },
       {
         "header": "LONDRES · HIGHGATE CEMETERY AND NORTHERN PATHS",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>OPEN IN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>OPEN IN MAPS</a>"
       },
       {
         "header": "EDINBOURGH · OUTTER WALKS",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>OPEN IN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>OPEN IN MAPS</a>"
       },
       {
         "header": "EDIMBURGO · ROADTRIP",
-        "content": "<a href='#' onclick='openMap('https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g')'>Ver recorrido</a><br><a href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>OPEN IN MAPS</a>"
+        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g\')\">Ver recorrido</a><br><a href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>OPEN IN MAPS</a>"
       }
     ]
   }
@@ -638,30 +653,28 @@
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.body.classList.add('dark');
     }
-  </script>
+  
+function openMap(url) {
+  const modal = document.getElementById('map-modal');
+  const iframe = document.getElementById('map-iframe');
+  iframe.src = url;
+  modal.style.display = 'flex';
+}
+function closeMap() {
+  const modal = document.getElementById('map-modal');
+  const iframe = document.getElementById('map-iframe');
+  iframe.src = '';
+  modal.style.display = 'none';
+}
 
-  <div id="map-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeMap()">×</span>
-      <iframe id="map-iframe" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+</script>
+
+<div id="map-modal" class="modal hidden" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 99999;">
+  <div class="modal-content" style="position: relative; width: 90vw; height: 80vh; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+    <span class="close-btn" onclick="closeMap()" style="position: absolute; top: 10px; right: 16px; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: #444; z-index: 10;">×</span>
+    <iframe id="map-iframe" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
   </div>
-  <script>
-    function openMap(url) {
-      const modal = document.getElementById('map-modal');
-      const iframe = document.getElementById('map-iframe');
-      iframe.src = url;
-      modal.classList.remove('hidden');
-    }
+</div>
 
-    function closeMap() {
-      const modal = document.getElementById('map-modal');
-      const iframe = document.getElementById('map-iframe');
-      iframe.src = '';
-      modal.classList.add('hidden');
-    }
-  </script>
 </body>
-
 </html>
