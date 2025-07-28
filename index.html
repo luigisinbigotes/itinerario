@@ -24,6 +24,45 @@ function closeMap() {
   modal.style.display = 'none';
 }
 
+
+
+function searchDay() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  if (!input) return;
+  for (let i = 0; i < days.length; i++) {
+    const blocks = showEnglish ? days[i].blocksEn : days[i].blocks;
+    for (let b of blocks) {
+      if (b.content.toLowerCase().includes(input) || b.header.toLowerCase().includes(input)) {
+        current = i;
+        render();
+        return;
+      }
+    }
+  }
+}
+
+
+
+function toggleDayList() {
+  const dayList = document.getElementById('dayList');
+  if (dayList.style.display === 'none') {
+    let html = '';
+    for (let i = 0; i < days.length; i++) {
+      const title = showEnglish ? days[i].enTitle : days[i].title;
+      html += `<div style='padding: 0.25rem 0; cursor: pointer;' onclick='jumpToDay(${i})'>${title}</div>`;
+    }
+    dayList.innerHTML = html;
+    dayList.style.display = 'block';
+  } else {
+    dayList.style.display = 'none';
+  }
+}
+function jumpToDay(index) {
+  current = index;
+  render();
+  document.getElementById('dayList').style.display = 'none';
+}
+
 </script>
   <style>
     * {
@@ -60,7 +99,7 @@ function closeMap() {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: calc(100vh - var(--controls-height));
+      height: calc(100vh - var(--controls-height) - 1rem);
       padding: 0.5em;
       box-sizing: border-box;
     }
@@ -99,8 +138,9 @@ function closeMap() {
       color: var(--text-dark);
     }
     .content {
+  padding-bottom: 1rem;
       flex: 1 1 auto;
-      overflow-y: auto;
+      overflow-y: auto; max-height: 100%;
       padding: 1rem 1.5rem;
     }
     .card h3 {
@@ -179,6 +219,21 @@ function closeMap() {
   </style>
 </head>
 <body>
+
+
+
+<div style="padding: 1rem; display: flex; justify-content: center;">
+  <div style="width: 95vw; max-width: 600px; display: flex; gap: 0.5rem;">
+    <button onclick="toggleDayList()" style="padding: 0.5rem 1rem; font-size: 1.2rem; border-radius: 8px; border: 1px solid #ccc; background: #eee; cursor: pointer;">☰</button>
+    <input type="text" id="searchInput" placeholder="Buscar palabra clave..." style="flex: 1; padding: 0.5rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" oninput="searchDay()" />
+  </div>
+</div>
+<div id="dayList" style="display: none; text-align: left; margin: 0 auto; width: 95vw; max-width: 600px; background: #fafafa; border: 1px solid #ddd; border-radius: 8px; padding: 1rem;">
+  <!-- Día por día se llena vía JS -->
+</div>
+
+
+
   <div class="container">
     <div id="itinerary-card" class="card city-neutral">
       <div class="content">
@@ -665,6 +720,45 @@ function closeMap() {
   const iframe = document.getElementById('map-iframe');
   iframe.src = '';
   modal.style.display = 'none';
+}
+
+
+
+function searchDay() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  if (!input) return;
+  for (let i = 0; i < days.length; i++) {
+    const blocks = showEnglish ? days[i].blocksEn : days[i].blocks;
+    for (let b of blocks) {
+      if (b.content.toLowerCase().includes(input) || b.header.toLowerCase().includes(input)) {
+        current = i;
+        render();
+        return;
+      }
+    }
+  }
+}
+
+
+
+function toggleDayList() {
+  const dayList = document.getElementById('dayList');
+  if (dayList.style.display === 'none') {
+    let html = '';
+    for (let i = 0; i < days.length; i++) {
+      const title = showEnglish ? days[i].enTitle : days[i].title;
+      html += `<div style='padding: 0.25rem 0; cursor: pointer;' onclick='jumpToDay(${i})'>${title}</div>`;
+    }
+    dayList.innerHTML = html;
+    dayList.style.display = 'block';
+  } else {
+    dayList.style.display = 'none';
+  }
+}
+function jumpToDay(index) {
+  current = index;
+  render();
+  document.getElementById('dayList').style.display = 'none';
 }
 
 </script>
