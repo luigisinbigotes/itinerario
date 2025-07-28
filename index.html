@@ -612,21 +612,21 @@
     }
 
     function prevDay() {
-      if (current > 0) { current--; window.onload = function () { render(); }; }
+      if (current > 0) { current--; render(); }
     }
     function nextDay() {
-      if (current < days.length - 1) { current++; window.onload = function () { render(); }; }
+      if (current < days.length - 1) { current++; render(); }
     }
     function toggleLang() {
       showEnglish = !showEnglish;
-      window.onload = function () { render(); };
+      render();
     }
 
     document.getElementById('prev').onclick = prevDay;
     document.getElementById('next').onclick = nextDay;
     toggleBtn.onclick = toggleLang;
 
-    window.onload = function () { render(); };
+    render();
 
     let startX = 0;
     card.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
