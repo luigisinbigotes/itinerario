@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="="es">
+
+<html es"="" lang="=">
 <head>
-  <meta charset="UTF-8" />
-  <title>Itinerario UK 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
-  <link rel="manifest" href="manifest.json" />
-  <script>
+<meta charset="utf-8"/>
+<title>Itinerario UK 2025</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="manifest.json" rel="manifest"/>
+<script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
@@ -99,7 +100,7 @@ window.addEventListener("load", () => {
 });
 
 </script>
-  <style>
+<style>
     * {
   -webkit-tap-highlight-color: transparent;
 }
@@ -257,38 +258,46 @@ window.addEventListener("load", () => {
   </style>
 </head>
 <body>
-
-
-
 <div style="padding: 1rem; display: flex; justify-content: center;">
-  <div style="width: 95vw; max-width: 600px; display: flex; gap: 0.5rem;">
-    <button onclick="toggleDayList()" style="padding: 0.5rem 1rem; font-size: 1.2rem; border-radius: 8px; border: 1px solid #ccc; background: #eee; cursor: pointer;">☰</button>
-    <input type="text" id="searchInput" placeholder="Buscar palabra clave..." style="flex: 1; padding: 0.5rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" oninput="searchDay()" />
-  </div>
+<div style="width: 95vw; max-width: 600px; display: flex; gap: 0.5rem;">
+<button onclick="toggleDayList()" style="padding: 0.5rem 1rem; font-size: 1.2rem; border-radius: 8px; border: 1px solid #ccc; background: #eee; cursor: pointer;">☰</button>
+<input id="searchInput" oninput="searchDay()" placeholder="Buscar palabra clave..." style="flex: 1; padding: 0.5rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" type="text"/>
 </div>
-<div id="dayList" style="display: none; text-align: left; margin: 0 auto; width: 100%; max-width: 600px; background: #fafafa; border: 1px solid #ddd; border-radius: 8px; padding: 1rem; box-sizing: border-box;">
-  <!-- Día por día se llena vía JS -->
 </div>
-
-
-
-  <div class="container">
-    <div id="itinerary-card" class="card city-neutral">
-      <div class="content">
-        <p>Cargando contenido...</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="controls-wrapper" id="controls-wrapper">
-    <span id="prev">&#8592; Anterior</span>
-    <span>
-      <button class="lang-btn" id="toggleLangBtn">Ver en English</button>
-    </span>
-    <span id="next">Siguiente &#8594;</span>
-  </div>
-
-  <script>
+<div id="dayList" style="
+display: none;
+position: absolute;
+z-index: 9999;
+max-height: calc(70vh - 250px);
+overflow-y: auto;
+width: 95vw;
+max-width: 600px;
+background: #fafafa;
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 1rem;
+box-sizing: border-box;
+left: 50%;
+transform: translateX(-50%);
+margin-top: 0.5rem;
+">
+<!-- Día por día se llena vía JS -->
+</div>
+<div class="container">
+<div class="card city-neutral" id="itinerary-card">
+<div class="content">
+<p>Cargando contenido...</p>
+</div>
+</div>
+</div>
+<div class="controls-wrapper" id="controls-wrapper">
+<span id="prev">← Anterior</span>
+<span>
+<button class="lang-btn" id="toggleLangBtn">Ver en English</button>
+</span>
+<span id="next">Siguiente →</span>
+</div>
+<script>
     const days = [
   {
   city: 'edinburgh',
@@ -835,13 +844,11 @@ window.addEventListener("load", () => {
 });
 
 </script>
-
-<div id="map-modal" class="modal hidden" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 99999;">
-  <div class="modal-content" style="position: relative; width: 90vw; height: 80vh; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
-    <span class="close-btn" onclick="closeMap()" style="position: absolute; top: 10px; right: 16px; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: #444; z-index: 10;">×</span>
-    <iframe id="map-iframe" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
-  </div>
+<div class="modal hidden" id="map-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 99999;">
+<div class="modal-content" style="position: relative; width: 90vw; height: 80vh; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+<span class="close-btn" onclick="closeMap()" style="position: absolute; top: 10px; right: 16px; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: #444; z-index: 10;">×</span>
+<iframe allowfullscreen="" height="100%" id="map-iframe" loading="lazy" style="border:0;" width="100%"></iframe>
 </div>
-
+</div>
 </body>
 </html>
