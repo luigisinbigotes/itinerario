@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="="es">
+
+<html es"="" lang="=">
 <head>
-  <meta charset="UTF-8" />
-  <title>Itinerario UK 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
-  <link rel="manifest" href="manifest.json" />
-  <script>
+<meta charset="utf-8"/>
+<title>Itinerario UK 2025</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="manifest.json" rel="manifest"/>
+<script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
   </script>
-  <style>
+<style>
     * {
   -webkit-tap-highlight-color: transparent;
 }
@@ -165,23 +166,21 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div id="itinerary-card" class="card city-neutral">
-      <div class="content">
-        <p>Cargando contenido...</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="controls-wrapper" id="controls-wrapper">
-    <span id="prev">&#8592; Anterior</span>
-    <span>
-      <button class="lang-btn" id="toggleLangBtn">Ver en English</button>
-    </span>
-    <span id="next">Siguiente &#8594;</span>
-  </div>
-
-  <script>
+<div class="container">
+<div class="card city-neutral" id="itinerary-card">
+<div class="content">
+<p>Cargando contenido...</p>
+</div>
+</div>
+</div>
+<div class="controls-wrapper" id="controls-wrapper">
+<span id="prev">← Anterior</span>
+<span>
+<button class="lang-btn" id="toggleLangBtn">Ver en English</button>
+</span>
+<span id="next">Siguiente →</span>
+</div>
+<script>
     const days = [
   {
   city: 'edinburgh',
@@ -640,5 +639,29 @@
       document.body.classList.add('dark');
     }
   </script>
+
+  <div id="map-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeMap()">×</span>
+      <iframe id="map-iframe" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+  <script>
+    function openMap(url) {
+      const modal = document.getElementById('map-modal');
+      const iframe = document.getElementById('map-iframe');
+      iframe.src = url;
+      modal.classList.remove('hidden');
+    }
+
+    function closeMap() {
+      const modal = document.getElementById('map-modal');
+      const iframe = document.getElementById('map-iframe');
+      iframe.src = '';
+      modal.classList.add('hidden');
+    }
+  </script>
 </body>
+
 </html>
