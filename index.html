@@ -1,110 +1,112 @@
 <!DOCTYPE html>
 
 <html es"="" lang="=">
+
 <head>
-<meta charset="utf-8"/>
-<title>Itinerario UK 2025</title>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
-<link href="manifest.json" rel="manifest"/>
-<script>
+  <meta charset="utf-8" />
+  <title>Itinerario UK 2025</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&amp;display=swap" rel="stylesheet" />
+  <link href="manifest.json" rel="manifest" />
+  <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
-  
-function openMap(url) {
-  const modal = document.getElementById('map-modal');
-  const iframe = document.getElementById('map-iframe');
-  iframe.src = url;
-  modal.style.display = 'flex';
-}
-function closeMap() {
-  const modal = document.getElementById('map-modal');
-  const iframe = document.getElementById('map-iframe');
-  iframe.src = '';
-  modal.style.display = 'none';
-}
+
+    function openMap(url) {
+      const modal = document.getElementById('map-modal');
+      const iframe = document.getElementById('map-iframe');
+      iframe.src = url;
+      modal.style.display = 'flex';
+    }
+    function closeMap() {
+      const modal = document.getElementById('map-modal');
+      const iframe = document.getElementById('map-iframe');
+      iframe.src = '';
+      modal.style.display = 'none';
+    }
 
 
 
-function searchDay() {
-  const input = document.getElementById('searchInput').value.toLowerCase();
-  if (!input) return;
-  for (let i = 0; i < days.length; i++) {
-    const blocks = showEnglish ? days[i].blocksEn : days[i].blocks;
-    for (let b of blocks) {
-      if (b.content.toLowerCase().includes(input) || b.header.toLowerCase().includes(input)) {
-        current = i;
-        render();
-        return;
+    function searchDay() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      if (!input) return;
+      for (let i = 0; i < days.length; i++) {
+        const blocks = showEnglish ? days[i].blocksEn : days[i].blocks;
+        for (let b of blocks) {
+          if (b.content.toLowerCase().includes(input) || b.header.toLowerCase().includes(input)) {
+            current = i;
+            render();
+            return;
+          }
+        }
       }
     }
-  }
-}
 
 
 
-function toggleDayList() {
-  const dayList = document.getElementById('dayList');
-  if (dayList.style.display === 'none') {
-    let html = '';
-    for (let i = 0; i < days.length; i++) {
-      const title = showEnglish ? days[i].enTitle : days[i].title;
-      html += `<div style='padding: 0.25rem 0; cursor: pointer;' onclick='jumpToDay(${i})'>${title}</div>`;
+    function toggleDayList() {
+      const dayList = document.getElementById('dayList');
+      if (dayList.style.display === 'none') {
+        let html = '';
+        for (let i = 0; i < days.length; i++) {
+          const title = showEnglish ? days[i].enTitle : days[i].title;
+          html += `<div style='padding: 0.25rem 0; cursor: pointer;' onclick='jumpToDay(${i})'>${title}</div>`;
+        }
+        dayList.innerHTML = html;
+        dayList.style.display = 'block';
+      } else {
+        dayList.style.display = 'none';
+      }
     }
-    dayList.innerHTML = html;
-    dayList.style.display = 'block';
-  } else {
-    dayList.style.display = 'none';
-  }
-}
-function jumpToDay(index) {
-  current = index;
-  render();
-  document.getElementById('dayList').style.display = 'none';
-}
+    function jumpToDay(index) {
+      current = index;
+      render();
+      document.getElementById('dayList').style.display = 'none';
+    }
 
 
 
-document.addEventListener('click', function(event) {
-  const dayList = document.getElementById('dayList');
-  const toggleBtn = event.target.closest('button');
-  const isInsideMenu = event.target.closest('#dayList');
-  if (!isInsideMenu && (!toggleBtn || toggleBtn.textContent !== '☰')) {
-    dayList.style.display = 'none';
-  }
-});
+    document.addEventListener('click', function (event) {
+      const dayList = document.getElementById('dayList');
+      const toggleBtn = event.target.closest('button');
+      const isInsideMenu = event.target.closest('#dayList');
+      if (!isInsideMenu && (!toggleBtn || toggleBtn.textContent !== '☰')) {
+        dayList.style.display = 'none';
+      }
+    });
 
 
-// Detectar día actual y posicionar si hay coincidencia
-function getTodayIndex() {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const yyyy = today.getFullYear();
-  const todayStr = `${dd}/${mm}/${yyyy}`;
-  console.log("📅 Buscando día:", todayStr);
-  return days.findIndex(day => day.title.includes(todayStr));
-}
+    // Detectar día actual y posicionar si hay coincidencia
+    function getTodayIndex() {
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+      const todayStr = `${dd}/${mm}/${yyyy}`;
+      console.log("📅 Buscando día:", todayStr);
+      return days.findIndex(day => day.title.includes(todayStr));
+    }
 
-window.addEventListener("load", () => {
-  console.log("🚀 Script de auto-scroll ejecutado");
-  const idx = getTodayIndex();
-  if (idx !== -1) {
-    current = idx;
-    console.log("✅ Día encontrado en índice:", idx);
-  } else {
-    console.log("❌ Día no encontrado en titles.");
-  }
-  render();
-});
+    window.addEventListener("load", () => {
+      console.log("🚀 Script de auto-scroll ejecutado");
+      const idx = getTodayIndex();
+      if (idx !== -1) {
+        current = idx;
+        console.log("✅ Día encontrado en índice:", idx);
+      } else {
+        console.log("❌ Día no encontrado en titles.");
+      }
+      render();
+    });
 
-</script>
-<style>
+  </script>
+  <style>
     * {
-  -webkit-tap-highlight-color: transparent;
-}
-:root {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
       --color-london: #296147;
       --color-edinburgh: #28406b;
       --color-inverness: #b89a35;
@@ -118,30 +120,36 @@ window.addEventListener("load", () => {
       --border-width: 10px;
       --controls-height: 60px;
     }
-    html, body {
+
+    html,
+    body {
       height: 100%;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       font-family: 'JetBrains Mono', monospace;
       background: var(--bg-light);
       color: var(--text-light);
       transition: background 0.4s, color 0.4s;
       overflow: hidden;
     }
+
     body.dark {
       background: var(--bg-dark);
       color: var(--text-dark);
     }
+
     .container {
-  padding-bottom: 4.5rem;
+      padding-bottom: 4.5rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      
+
       padding: 0.5em;
       box-sizing: border-box;
     }
+
     .card {
-  margin-bottom: 2rem;
+      margin-bottom: 2rem;
       position: relative;
       width: 95vw;
       max-width: 600px;
@@ -155,12 +163,31 @@ window.addEventListener("load", () => {
       font-size: 0.85rem;
       overflow: hidden;
     }
-    .city-london { border-color: var(--color-london); }
-    .city-edinburgh { border-color: var(--color-edinburgh); }
-    .city-inverness { border-color: var(--color-inverness); }
-    .city-highlands { border-color: var(--color-highlands); }
-    .city-neutral { border-color: var(--color-neutral); }
-    .city-emergency { border-color: var(--color-emergency); }
+
+    .city-london {
+      border-color: var(--color-london);
+    }
+
+    .city-edinburgh {
+      border-color: var(--color-edinburgh);
+    }
+
+    .city-inverness {
+      border-color: var(--color-inverness);
+    }
+
+    .city-highlands {
+      border-color: var(--color-highlands);
+    }
+
+    .city-neutral {
+      border-color: var(--color-neutral);
+    }
+
+    .city-emergency {
+      border-color: var(--color-emergency);
+    }
+
     .day-title {
       background: #aaa;
       border-bottom: 1px solid #ccc;
@@ -170,32 +197,39 @@ window.addEventListener("load", () => {
       text-align: center;
       flex-shrink: 0;
     }
+
     body.dark .day-title {
       background: #f8f8f8;
       border-bottom: 1px solid #444;
       color: var(--text-dark);
     }
+
     .content {
-  padding-bottom: 1rem;
+      padding-bottom: 1rem;
       flex: 1 1 auto;
-      overflow-y: auto; max-height: 100%;
+      overflow-y: auto;
+      max-height: 100%;
       padding: 1rem 1.5rem;
     }
+
     .card h3 {
       margin: 0.8em 0 0.3em 0;
       font-size: 1.03rem;
     }
+
     .block {
       white-space: pre-wrap;
       margin-bottom: 1em;
     }
+
     .controls-wrapper {
       position: fixed;
       bottom: 0;
-      left: 0; right: 0;
+      left: 0;
+      right: 0;
       height: var(--controls-height);
       background: #f0f0f0;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -204,9 +238,11 @@ window.addEventListener("load", () => {
       font-weight: 700;
       z-index: 9999;
     }
+
     .controls-wrapper.dark {
       background: #f5f5f5;
     }
+
     .controls span {
       cursor: pointer;
       padding: 0.4em 1em;
@@ -215,9 +251,11 @@ window.addEventListener("load", () => {
       transition: background 0.3s;
       user-select: none;
     }
+
     .controls span:active {
       background: #ddd;
     }
+
     button.lang-btn {
       cursor: pointer;
       padding: 0.4em 1em;
@@ -233,22 +271,34 @@ window.addEventListener("load", () => {
       min-width: 110px;
       flex-shrink: 0;
     }
+
     button.lang-btn:active {
       background: #e6e6e6;
     }
+
     body.dark button.lang-btn {
       background: #f5f5f5;
       border-color: var(--text-dark);
       color: var(--text-dark);
     }
+
     @media (max-width: 600px) {
       .card {
-  margin-bottom: 2rem; width: 98vw; max-width: none; }
-      .controls-wrapper { height: 50px; padding: 0 1rem; }
+        margin-bottom: 2rem;
+        width: 98vw;
+        max-width: none;
+      }
+
+      .controls-wrapper {
+        height: 50px;
+        padding: 0 1rem;
+      }
+
       .controls span {
         padding: 0.3em 0.8em;
         font-size: 0.9em;
       }
+
       button.lang-btn {
         min-width: 90px;
         padding: 0.3em 0.9em;
@@ -257,14 +307,17 @@ window.addEventListener("load", () => {
     }
   </style>
 </head>
+
 <body>
-<div style="padding: 1rem; display: flex; justify-content: center;">
-<div style="width: 95vw; max-width: 600px; display: flex; gap: 0.5rem;">
-<button onclick="toggleDayList()" style="padding: 0.5rem 1rem; font-size: 1.2rem; border-radius: 8px; border: 1px solid #ccc; background: #eee; cursor: pointer;">☰</button>
-<input id="searchInput" oninput="searchDay()" placeholder="Buscar palabra clave..." style="flex: 1; padding: 0.5rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" type="text"/>
-</div>
-</div>
-<div id="dayList" style="
+  <div style="padding: 1rem; display: flex; justify-content: center;">
+    <div style="width: 95vw; max-width: 600px; display: flex; gap: 0.5rem;">
+      <button onclick="toggleDayList()"
+        style="padding: 0.5rem 1rem; font-size: 1.2rem; border-radius: 8px; border: 1px solid #ccc; background: #eee; cursor: pointer;">☰</button>
+      <input id="searchInput" oninput="searchDay()" placeholder="Buscar palabra clave..."
+        style="flex: 1; padding: 0.5rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" type="text" />
+    </div>
+  </div>
+  <div id="dayList" style="
 display: none;
 position: absolute;
 z-index: 9999;
@@ -281,508 +334,524 @@ left: 50%;
 transform: translateX(-50%);
 margin-top: 0.5rem;
 ">
-<!-- Día por día se llena vía JS -->
-</div>
-<div class="container">
-<div class="card city-neutral" id="itinerary-card">
-<div class="content">
-<p>Cargando contenido...</p>
-</div>
-</div>
-</div>
-<div class="controls-wrapper" id="controls-wrapper">
-<span id="prev">← Anterior</span>
-<span>
-<button class="lang-btn" id="toggleLangBtn">Ver en English</button>
-</span>
-<span id="next">Siguiente →</span>
-</div>
-<script>
+    <!-- Día por día se llena vía JS -->
+  </div>
+  <div class="container">
+    <div class="card city-neutral" id="itinerary-card">
+      <div class="content">
+        <p>Cargando contenido...</p>
+      </div>
+    </div>
+  </div>
+  <div class="controls-wrapper" id="controls-wrapper">
+    <span id="prev">← Anterior</span>
+    <span>
+      <button class="lang-btn" id="toggleLangBtn">Ver en English</button>
+    </span>
+    <span id="next">Siguiente →</span>
+  </div>
+  <script>
     const days = [
-  {
-  city: 'edinburgh',
-  title: "Domingo 16/11  • DIA 0",
-  enTitle: "Sunday, 16 November 2025  • DAY 0",
-  blocks: [
       {
-      header: "VUELO INTERNACIONAL:",
-      content: " • British Airways BA0248\n • Salida: Buenos Aires Ezeiza (Terminal P)  • 13:35\n • Llegada: Londres Heathrow (Terminal 5) - 08:35 (+1)\n • Codigo de reserva: XQOSQR\n • Asientos: Confirmados\n • Equipaje: 1 carry-on + 1 maleta despachada 23 kg por persona"
+        city: 'edinburgh',
+        title: "Domingo 16/11  • DIA 0",
+        enTitle: "Sunday, 16 November 2025  • DAY 0",
+        blocks: [
+          {
+            header: "VUELO INTERNACIONAL:",
+            content: " • British Airways BA0248\n • Salida: Buenos Aires Ezeiza (Terminal P)  • 13:35\n • Llegada: Londres Heathrow (Terminal 5) - 08:35 (+1)\n • Codigo de reserva: XQOSQR\n • Asientos: Confirmados\n • Equipaje: 1 carry-on + 1 maleta despachada 23 kg por persona"
+          },
+          {
+            header: "OBSERVACIONES:",
+            content: " • Llegar al aeropuerto 3 horas antes.\n • Llevar adaptador UK/EU.\n • Activar tarjetas de credito para uso internacional."
+          }
+        ],
+        blocksEn: [
+          {
+            header: "INTERNATIONAL FLIGHT:",
+            content: " • British Airways BA0248\n • Departure: Buenos Aires Ezeiza (Terminal P) - 13:35\n • Arrival: London Heathrow (Terminal 5) - 08:35 (+1)\n • Booking code: XQOSQR\n • Seats: Confirmed\n • Luggage: 1 carry-on + 1 checked bag 23 kg per person"
+          },
+          {
+            header: "NOTES:",
+            content: " • Arrive at the airport 3 hours early.\n • Bring UK/EU plug adapter.\n • Enable credit cards for international use."
+          }
+        ]
       },
       {
-      header: "OBSERVACIONES:",
-      content: " • Llegar al aeropuerto 3 horas antes.\n • Llevar adaptador UK/EU.\n • Activar tarjetas de credito para uso internacional."
+        city: 'edinburgh',
+        title: "Lunes 17/11 - DIA 1",
+        enTitle: "Monday, 17 November 2025 - DAY 1",
+        blocks: [
+          {
+            header: "LLEGADA A LONDRES Y CONEXION A EDIMBURGO",
+            content: " • Llegada vuelo BA0248 a Heathrow 08:35.\n • Vuelo: British Airways BA1450\n • Salida: Londres Heathrow (Terminal 5) - 12:55\n • Llegada: Edimburgo (EDI) - 14:25\n • Codigo de reserva: XR9EO6\n • Asientos: 25A y 25B"
+          },
+          {
+            header: "TRASLADO ALOJAMIENTO:",
+            content: " • Airlink 100 bus (Waverley Bridge, ya comprados)."
+          },
+          {
+            header: "ALOJAMIENTO EDIMBURGO:",
+            content: " • 477B Lawnmarket, Edinburgh EH1 2NT, UK\n • Check-in: despues de 15:00 h"
+          },
+          {
+            header: "PASEO POR EL CENTRO - 1",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "ARRIVAL IN LONDON AND CONNECTION TO EDINBURGH",
+            content: " • Arrival from BA0248 at Heathrow 08:35.\n • Flight: British Airways BA1450\n • Departure: London Heathrow (Terminal 5) - 12:55\n • Arrival: Edinburgh (EDI) - 14:25\n • Booking code: XR9EO6\n • Seats: 25A and 25B"
+          },
+          {
+            header: "TRANSFER TO ACCOMMODATION:",
+            content: " • Airlink 100 bus (Waverley Bridge, already purchased)."
+          },
+          {
+            header: "EDINBURGH ACCOMMODATION:",
+            content: " • 477B Lawnmarket, Edinburgh EH1 2NT, UK\n • Check-in: after 15:00"
+          },
+          {
+            header: "WALK IN DOWNTOWN - 1",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
+          }
+        ]
+      },
+      {
+        city: 'edinburgh',
+        title: "Martes 18/11 - DIA 2",
+        enTitle: "Tuesday, 18 November 2025 - DAY 2",
+        blocks: [
+          {
+            header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
+            content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "PASEO POR EL CENTRO - 2",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "EDINBURGH ROADTRIP (if renting car)",
+            content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "WALK IN DOWNTOWN - 2",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
+          }
+        ]
+      },
+      {
+        city: 'edinburgh',
+        title: "Miércoles 19/11 - DIA 3",
+        enTitle: "Wednesday, 19 November 2025 - DAY 3",
+        blocks: [
+          {
+            header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
+            content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "PASEO POR EL CENTRO - 3",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "EDINBURGH ROADTRIP (if renting car)",
+            content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "WALK IN DOWNTOWN - 3",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
+          }
+        ]
+      },
+      {
+        city: 'edinburgh',
+        title: "Jueves 20/11 - DIA 4",
+        enTitle: "Thursday, 20 November 2025 - DAY 4",
+        blocks: [
+          {
+            header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
+            content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "PASEO POR EL CENTRO - 4",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "EDINBURGH ROADTRIP (if renting car)",
+            content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "WALK IN DOWNTOWN - 4",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
+          }
+        ]
+      },
+      {
+        city: 'highlands',
+        title: "Viernes 21/11 - DIA 5",
+        enTitle: "Friday, 21 November 2025 - DAY 5",
+        blocks: [
+          {
+            header: "EDIMBURGO - INVERNESS",
+            content: " • Tren: Edimburgo Waverley a Inverness (ScotRail)\n  Salida 10:32 - Llegada 14:16\n • Tipo de ticket: Anytime Day Single. Código de reserva: Ver PDF.\n • Alojamiento: Riverbank Studio, 55 Huntly St, Inverness.\n • Tarde libre para recorrer la ciudad.\n • Revisar punto de encuentro para tour del sábado."
+          },
+          {
+            header: "PASEO RANDOM - 1",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "EDINBURGH - INVERNESS",
+            content: " • Train: Edinburgh Waverley to Inverness (ScotRail)\n  Departure 10:32 - Arrival 14:16\n • Ticket: Anytime Day Single. Booking code: see PDF.\n • Accommodation: Riverbank Studio, 55 Huntly St, Inverness.\n • Free afternoon to explore the city.\n • Check meeting point for Saturday's tour."
+          },
+          {
+            header: "RANDOM WALK - 1",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
+          }
+        ]
+      },
+      {
+        city: 'highlands',
+        title: "Sábado 22/11 - DIA 6",
+        enTitle: "Saturday, 22 November 2025 - DAY 6",
+        blocks: [
+          {
+            header: "INVERNESS - TOUR SKYE Y EILEAN DONAN",
+            content: " • Tour con Rabbie's Tours, salida 08:00 desde Inverness Cathedral Bus Stop.\n • Código de reserva: 143745905, pago realizado £136.\n • Llevar ropa de abrigo e impermeable, snacks y cámara.\n • Regreso por la tarde/noche."
+          }
+        ],
+        blocksEn: [
+          {
+            header: "INVERNESS - SKYE & EILEAN DONAN TOUR",
+            content: " • Tour with Rabbie's Tours, departs 08:00 from Inverness Cathedral Bus Stop.\n • Booking code: 143745905, paid £136.\n • Bring warm and waterproof clothing, snacks, and camera.\n • Return in the evening."
+          }
+        ]
+      },
+      {
+        city: 'inverness',
+        title: "Domingo 23/11 - DIA 7",
+        enTitle: "Sunday, 23 November 2025 - DAY 7",
+        blocks: [
+          {
+            header: "INVERNESS (DIA LIBRE)",
+            content: " • Opciones: Loch Ness (Urquhart Castle), alquiler de bici, pubs.\n • Música en vivo en Hootananny.\n • Noche extra confirmada en Inverness."
+          },
+          {
+            header: "PASEO RANDOM - 2",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "INVERNESS (FREE DAY)",
+            content: " • Options: Loch Ness (Urquhart Castle), rent a bike, pubs.\n • Live music at Hootananny.\n • Extra night confirmed in Inverness."
+          },
+          {
+            header: "RANDOM WALK - 2",
+            content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Lunes 24/11 - DIA 8",
+        enTitle: "Monday, 24 November 2025 - DAY 8",
+        blocks: [
+          {
+            header: "INVERNESS - LONDRES",
+            content: " • Tren: LNER Advance Single, salida 07:55, llegada 15:49 Kings Cross.\n  Asientos: Coach H, 81 y 82. Código de reserva: 25SM0NXUC0\n • Alojamiento: 343 Kensington High St, check-in después de 15:00."
+          }
+        ],
+        blocksEn: [
+          {
+            header: "INVERNESS - LONDON",
+            content: " • Train: LNER Advance Single, departure 07:55, arrival 15:49 Kings Cross.\n  Seats: Coach H, 81 and 82. Booking ref: 25SM0NXUC0\n • Accommodation: 343 Kensington High St, check-in after 15:00."
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Martes 25/11 - DIA 9",
+        enTitle: "Tuesday, 25 November 2025 - DAY 9",
+        blocks: [
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
+          },
+          {
+            header: "MUSICAL: LES MISÉRABLES",
+            content: " • Teatro: Sondheim Theatre, Londres\n• Fecha: Martes 25/11\n• Hora: 19:30 h\n• Asientos: STALLS, fila K, asientos 15 y 16\n• Código de reserva: TFDQN9D"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
+          },
+          {
+            header: "MUSICAL: LES MISÉRABLES",
+            content: " • Theatre: Sondheim Theatre, London\n• Date: Tuesday 11/25\n• Time: 19:30 h\n• Seats: row K, number 15 and 16\n• Reservation code: TFDQN9D"
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Miércoles 26/11 - DIA 10",
+        enTitle: "Wednesday, 26 November 2025 - DAY 10",
+        blocks: [
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Jueves 27/11 - DIA 11",
+        enTitle: "Thursday, 27 November 2025 - DAY 11",
+        blocks: [
+          {
+            header: "VISITA A LA ABADIA DE WESTMINSTER",
+            content: " • Entrada XX:XX A XX:XX, referencia XXXXXXXXX, 2 adultos."
+          },
+          {
+            header: "VISITA A LA TORRE DE LONDRES",
+            content: " • Entrada 13:30 A 14:00, referencia DVO537VATOS4H, 2 adultos."
+          },
+          {
+            header: "LONDRES · CENTRO",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "VISITA: NATIONAL PORTRAIT GALLERY",
+            content: " • Fecha: Jueves 27/11\n• Horario: 17:00 a 17:15 h\n• Código de orden: 2483060\n• Entrega: E-ticket"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "VISIT TOWESTMINSTER ABBEY",
+            content: " • Entry XX:XX to XX:XX, reference XXXXXXXXX, 2 adults."
+          },
+          {
+            header: "VISIT TO TOWER OF LONDON",
+            content: " • Entry 13:30 to 14:00, reference DVO537VATOS4H, 2 adults."
+          },
+          {
+            header: "LONDON · DOWNTOWN",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">SEE PATH</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "VISIT: NATIONAL PORTRAIT GALLERY",
+            content: " • Date: Thursday 11/27\n• Time: 17:00 to 17:15 h\n• Order number: 2483060"
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Viernes 28/11 - DIA 12",
+        enTitle: "Friday, 28 November 2025 - DAY 12",
+        blocks: [
+          {
+            header: "EXCURSIÓN A WINDSOR",
+            content: " • Tren: Paddington -> Windsor & Eton Central Partida 08:36 am. Arribo by 9:16 am. Reference XBRJFN9K.\n • Entrada Castillo de Windsor, 11:00, referencia 6365074, 2 adultos.\n • Regreso en tren a Londres por la tarde."
+          }
+        ],
+        blocksEn: [
+          {
+            header: "WINDSOR DAY TRIP",
+            content: " • Train: Paddington -> Windsor & Eton Central Departs 08:36 am. Arrives by 9:16 am. Reference XBRJFN9K.\n • Windsor Castle entry, 11:00, reference 6365074, 2 adults.\n • Return to London by train in the afternoon."
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Sábado 29/11 - DIA 13",
+        enTitle: "Saturday, 29 November 2025 - DAY 13",
+        blocks: [
+          {
+            header: "LONDRES",
+            content: " • Mercados y tiendas: Camden Market, Brick Lane, Liberty London, Harrods.\n • Espacios verdes: St Jamess Park, Regents Canal, Little Venice.\n • Experiencia especial: Té de la tarde en Fortnum & Mason, The Ritz o The Rubens."
+          },
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "LONDON",
+            content: " • Markets and shops: Camden Market, Brick Lane, Liberty London, Harrods.\n • Parks: St Jamess Park, Regents Canal, Little Venice.\n • Special experience: Afternoon tea at Fortnum & Mason, The Ritz or The Rubens."
+          },
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Domingo 30/11 - DIA 14",
+        enTitle: "Sunday, 30 November 2025 - DAY 14",
+        blocks: [
+          {
+            header: "LONDRES",
+            content: " • Museos, tiendas y paseos por zonas emblemáticas.\n • Posible visita: Sky Garden (reserva online si aún no lo hiciste)."
+          },
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "LONDON",
+            content: " • Museums, shopping and sightseeing in classic areas.\n • Possible visit: Sky Garden (book online if not yet reserved)."
+          },
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Lunes 1/12 - DIA 15",
+        enTitle: "Monday, 1 December 2025 - DAY 15",
+        blocks: [
+          {
+            header: "LONDRES",
+            content: " • Día libre para últimas compras y paseos.\n • Revisar reservas, chequear equipaje y transporte al aeropuerto."
+          },
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "LONDON",
+            content: " • Free day for last shopping and sightseeing.\n • Review bookings, check luggage and airport transport."
+          },
+          {
+            header: "RANDOM WALK",
+            content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
+          }
+        ]
+      },
+      {
+        city: 'london',
+        title: "Martes 2/12 - DIA 16",
+        enTitle: "Tuesday, 2 December 2025 - DAY 16",
+        blocks: [
+          {
+            header: "CHECK-OUT Y REGRESO",
+            content: " • Check-out: 343 Kensington High St, antes de las 11:00.\n • Traslado al aeropuerto: Tube District/Circle Line hasta Earls Court, luego Piccadilly Line hasta Heathrow, o taxi/Uber.\n • Vuelo: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n • Código de reserva: XQOSQR.\n • Llegar a Heathrow al menos 3 horas antes del vuelo."
+          }
+        ],
+        blocksEn: [
+          {
+            header: "CHECK-OUT AND RETURN",
+            content: " • Check-out: 343 Kensington High St, before 11:00.\n • Airport transfer: Tube District/Circle Line to Earls Court, then Piccadilly Line to Heathrow, or taxi/Uber.\n • Flight: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n • Booking code: XQOSQR.\n • Arrive at Heathrow at least 3 hours before your flight."
+          }
+        ]
+      },
+      {
+        city: 'neutral',
+        title: "Miércoles 3/12 - DIA 17",
+        enTitle: "Wednesday, 3 December 2025 - DAY 17",
+        blocks: [
+          {
+            header: "LLEGADA A BUENOS AIRES",
+            content: " • Llegada vuelo BA0249 a Ezeiza: 11:50 hs.\n • Fin del viaje!"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "ARRIVAL IN BUENOS AIRES",
+            content: " • Arrival of flight BA0249 at Ezeiza: 11:50 am.\n • End of the trip!"
+          }
+        ]
+      },
+      {
+        city: "neutral",
+        title: "RECORRIDOS A PIE",
+        enTitle: "WALKING ROUTES",
+        blocks: [
+          {
+            header: "LONDRES RECORRIDO NORTE",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "KENSINGTON Y MUSEOS",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "LONDRES · DEPARTAMENTALES Y BUCKINGHAM",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "LONDRES · CENTRO",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "LONDRES · HIGHGATE CEMETERY Y RECORRIDO NORTE",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "EDIMBURGO · AFUERAS",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>ABRIR EN MAPS</a>"
+          },
+          {
+            header: "EDIMBURGO · EN AUTO",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>ABRIR EN MAPS</a>"
+          }
+        ],
+        blocksEn: [
+          {
+            header: "LONDON NORTHERN PATH",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "KENSINGTON AND MUSEUMS",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "LONDON · DEPARTAMENT STORES AND BUCKINGHAM",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "LONDON · DOWNTOWN",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "LONDRES · HIGHGATE CEMETERY AND NORTHERN PATHS",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "EDINBOURGH · OUTTER WALKS",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>OPEN IN MAPS</a>"
+          },
+          {
+            header: "EDIMBURGO · ROADTRIP",
+            content: "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>OPEN IN MAPS</a>"
+          }
+        ]
       }
-    ],
-  blocksEn: [
-      {
-      header: "INTERNATIONAL FLIGHT:",
-      content: " • British Airways BA0248\n • Departure: Buenos Aires Ezeiza (Terminal P) - 13:35\n • Arrival: London Heathrow (Terminal 5) - 08:35 (+1)\n • Booking code: XQOSQR\n • Seats: Confirmed\n • Luggage: 1 carry-on + 1 checked bag 23 kg per person"
-      },
-      {
-      header: "NOTES:",
-      content: " • Arrive at the airport 3 hours early.\n • Bring UK/EU plug adapter.\n • Enable credit cards for international use."
-      }
-    ]
-  },
-  {
-  city: 'edinburgh',
-  title: "Lunes 17/11 - DIA 1",
-  enTitle: "Monday, 17 November 2025 - DAY 1",
-  blocks: [
-      {
-      header: "LLEGADA A LONDRES Y CONEXION A EDIMBURGO",
-      content: " • Llegada vuelo BA0248 a Heathrow 08:35.\n • Vuelo: British Airways BA1450\n • Salida: Londres Heathrow (Terminal 5) - 12:55\n • Llegada: Edimburgo (EDI) - 14:25\n • Codigo de reserva: XR9EO6\n • Asientos: 25A y 25B"
-      },
-      {
-      header: "TRASLADO ALOJAMIENTO:",
-      content: " • Airlink 100 bus (Waverley Bridge, ya comprados)."
-      },
-      {
-      header: "ALOJAMIENTO EDIMBURGO:",
-      content: " • 477B Lawnmarket, Edinburgh EH1 2NT, UK\n • Check-in: despues de 15:00 h"
-      },
-      {
-      header: "PASEO POR EL CENTRO - 1",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "ARRIVAL IN LONDON AND CONNECTION TO EDINBURGH",
-      content: " • Arrival from BA0248 at Heathrow 08:35.\n • Flight: British Airways BA1450\n • Departure: London Heathrow (Terminal 5) - 12:55\n • Arrival: Edinburgh (EDI) - 14:25\n • Booking code: XR9EO6\n • Seats: 25A and 25B"
-      },
-      {
-      header: "TRANSFER TO ACCOMMODATION:",
-      content: " • Airlink 100 bus (Waverley Bridge, already purchased)."
-      },
-      {
-      header: "EDINBURGH ACCOMMODATION:",
-      content: " • 477B Lawnmarket, Edinburgh EH1 2NT, UK\n • Check-in: after 15:00"
-      },
-      {
-      header: "WALK IN DOWNTOWN - 1",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  },
-  {
-  city: 'edinburgh',
-  title: "Martes 18/11 - DIA 2",
-  enTitle: "Tuesday, 18 November 2025 - DAY 2",
-  blocks: [
-      {
-      header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
-      content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-      header: "PASEO POR EL CENTRO - 2",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "EDINBURGH ROADTRIP (if renting car)",
-      content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-      header: "WALK IN DOWNTOWN - 2",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  },
-  {
-  city: 'edinburgh',
-  title: "Miércoles 19/11 - DIA 3",
-  enTitle: "Wednesday, 19 November 2025 - DAY 3",
-  blocks: [
-      {
-      header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
-      content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-      header: "PASEO POR EL CENTRO - 3",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "EDINBURGH ROADTRIP (if renting car)",
-      content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-      header: "WALK IN DOWNTOWN - 3",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  },
-  {
-  city: 'edinburgh',
-  title: "Jueves 20/11 - DIA 4",
-  enTitle: "Thursday, 20 November 2025 - DAY 4",
-  blocks: [
-      {
-      header: "ROADTRIP DESDE EDIMBURGO (si alquilan auto)",
-      content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-      header: "PASEO POR EL CENTRO - 4",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "EDINBURGH ROADTRIP (if renting car)",
-      content: " • William Wallace Monument, Stirilng Castle, Linlithgow Palace, Midhope Castle, Rosslyn Chappel\n • <a  href='https://maps.app.goo.gl/xReemZwvZ8mCW8bf9' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-      header: "WALK IN DOWNTOWN - 4",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  },
-  {
-  city: 'highlands',
-  title: "Viernes 21/11 - DIA 5",
-  enTitle: "Friday, 21 November 2025 - DAY 5",
-  blocks: [
-      {
-      header: "EDIMBURGO - INVERNESS",
-      content: " • Tren: Edimburgo Waverley a Inverness (ScotRail)\n  Salida 10:32 - Llegada 14:16\n • Tipo de ticket: Anytime Day Single. Código de reserva: Ver PDF.\n • Alojamiento: Riverbank Studio, 55 Huntly St, Inverness.\n • Tarde libre para recorrer la ciudad.\n • Revisar punto de encuentro para tour del sábado."
-      },
-      {
-      header: "PASEO RANDOM - 1",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "EDINBURGH - INVERNESS",
-      content: " • Train: Edinburgh Waverley to Inverness (ScotRail)\n  Departure 10:32 - Arrival 14:16\n • Ticket: Anytime Day Single. Booking code: see PDF.\n • Accommodation: Riverbank Studio, 55 Huntly St, Inverness.\n • Free afternoon to explore the city.\n • Check meeting point for Saturday's tour."
-      },
-      {
-      header: "RANDOM WALK - 1",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  },
-  {
-  city: 'highlands',
-  title: "Sábado 22/11 - DIA 6",
-  enTitle: "Saturday, 22 November 2025 - DAY 6",
-  blocks: [
-      {
-      header: "INVERNESS - TOUR SKYE Y EILEAN DONAN",
-      content: " • Tour con Rabbie's Tours, salida 08:00 desde Inverness Cathedral Bus Stop.\n • Código de reserva: 143745905, pago realizado £136.\n • Llevar ropa de abrigo e impermeable, snacks y cámara.\n • Regreso por la tarde/noche."
-      }
-    ],
-  blocksEn: [
-      {
-      header: "INVERNESS - SKYE & EILEAN DONAN TOUR",
-      content: " • Tour with Rabbie's Tours, departs 08:00 from Inverness Cathedral Bus Stop.\n • Booking code: 143745905, paid £136.\n • Bring warm and waterproof clothing, snacks, and camera.\n • Return in the evening."
-      }
-    ]
-  },
-  {
-  city: 'inverness',
-  title: "Domingo 23/11 - DIA 7",
-  enTitle: "Sunday, 23 November 2025 - DAY 7",
-  blocks: [
-      {
-      header: "INVERNESS (DIA LIBRE)",
-      content: " • Opciones: Loch Ness (Urquhart Castle), alquiler de bici, pubs.\n • Música en vivo en Hootananny.\n • Noche extra confirmada en Inverness."
-      },
-      {
-      header: "PASEO RANDOM - 2",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "INVERNESS (FREE DAY)",
-      content: " • Options: Loch Ness (Urquhart Castle), rent a bike, pubs.\n • Live music at Hootananny.\n • Extra night confirmed in Inverness."
-      },
-      {
-      header: "RANDOM WALK - 2",
-      content: " • <a  href='https://maps.app.goo.gl/7FVVH3W3UZ1AQ5717' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Lunes 24/11 - DIA 8",
-  enTitle: "Monday, 24 November 2025 - DAY 8",
-  blocks: [
-      {
-      header: "INVERNESS - LONDRES",
-      content: " • Tren: LNER Advance Single, salida 07:55, llegada 15:49 Kings Cross.\n  Asientos: Coach H, 81 y 82. Código de reserva: 25SM0NXUC0\n • Alojamiento: 343 Kensington High St, check-in después de 15:00."
-      }
-    ],
-  blocksEn: [
-      {
-      header: "INVERNESS - LONDON",
-      content: " • Train: LNER Advance Single, departure 07:55, arrival 15:49 Kings Cross.\n  Seats: Coach H, 81 and 82. Booking ref: 25SM0NXUC0\n • Accommodation: 343 Kensington High St, check-in after 15:00."
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Martes 25/11 - DIA 9",
-  enTitle: "Tuesday, 25 November 2025 - DAY 9",
-  blocks: [
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Miércoles 26/11 - DIA 10",
-  enTitle: "Wednesday, 26 November 2025 - DAY 10",
-  blocks: [
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Jueves 27/11 - DIA 11",
-  enTitle: "Thursday, 27 November 2025 - DAY 11",
-  blocks: [
-      {
-      header: "VISITA A LA ABADIA DE WESTMINSTER",
-      content: " • Entrada XX:XX A XX:XX, referencia XXXXXXXXX, 2 adultos."
-      },
-      {
-      header: "VISITA A LA TORRE DE LONDRES",
-      content: " • Entrada 13:30 A 14:00, referencia DVO537VATOS4H, 2 adultos."
-      },
-      {
-        "header": "LONDRES · CENTRO",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "VISIT TOWESTMINSTER ABBEY",
-      content: " • Entry XX:XX to XX:XX, reference XXXXXXXXX, 2 adults."
-      },
-      {
-      header: "VISIT TO TOWER OF LONDON",
-      content: " • Entry 13:30 to 14:00, reference DVO537VATOS4H, 2 adults."
-      },
-      {
-        "header": "LONDON · DOWNTOWN",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">SEE PATH</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Viernes 28/11 - DIA 12",
-  enTitle: "Friday, 28 November 2025 - DAY 12",
-  blocks: [
-      {
-      header: "EXCURSIÓN A WINDSOR",
-      content: " • Tren: Paddington -> Windsor & Eton Central Partida 08:36 am. Arribo by 9:16 am. Reference XBRJFN9K.\n • Entrada Castillo de Windsor, 11:00, referencia 6365074, 2 adultos.\n • Regreso en tren a Londres por la tarde."
-      }
-    ],
-  blocksEn: [
-      {
-      header: "WINDSOR DAY TRIP",
-      content: " • Train: Paddington -> Windsor & Eton Central Departs 08:36 am. Arrives by 9:16 am. Reference XBRJFN9K.\n • Windsor Castle entry, 11:00, reference 6365074, 2 adults.\n • Return to London by train in the afternoon."
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Sábado 29/11 - DIA 13",
-  enTitle: "Saturday, 29 November 2025 - DAY 13",
-  blocks: [
-      {
-      header: "LONDRES",
-      content: " • Mercados y tiendas: Camden Market, Brick Lane, Liberty London, Harrods.\n • Espacios verdes: St Jamess Park, Regents Canal, Little Venice.\n • Experiencia especial: Té de la tarde en Fortnum & Mason, The Ritz o The Rubens."
-      },
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "LONDON",
-      content: " • Markets and shops: Camden Market, Brick Lane, Liberty London, Harrods.\n • Parks: St Jamess Park, Regents Canal, Little Venice.\n • Special experience: Afternoon tea at Fortnum & Mason, The Ritz or The Rubens."
-      },
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Domingo 30/11 - DIA 14",
-  enTitle: "Sunday, 30 November 2025 - DAY 14",
-  blocks: [
-      {
-      header: "LONDRES",
-      content: " • Museos, tiendas y paseos por zonas emblemáticas.\n • Posible visita: Sky Garden (reserva online si aún no lo hiciste)."
-      },
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "LONDON",
-      content: " • Museums, shopping and sightseeing in classic areas.\n • Possible visit: Sky Garden (book online if not yet reserved)."
-      },
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Lunes 1/12 - DIA 15",
-  enTitle: "Monday, 1 December 2025 - DAY 15",
-  blocks: [
-      {
-      header: "LONDRES",
-      content: " • Día libre para últimas compras y paseos.\n • Revisar reservas, chequear equipaje y transporte al aeropuerto."
-      },
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>VER RECORRIDOS</a>"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "LONDON",
-      content: " • Free day for last shopping and sightseeing.\n • Review bookings, check luggage and airport transport."
-      },
-      {
-      header: "RANDOM WALK",
-      content: " • <a  href='https://luigisinbigotes.github.io/itinerario?dia=18'>CHECK WALKS</a>"
-      }
-    ]
-  },
-  {
-  city: 'london',
-  title: "Martes 2/12 - DIA 16",
-  enTitle: "Tuesday, 2 December 2025 - DAY 16",
-  blocks: [
-      {
-      header: "CHECK-OUT Y REGRESO",
-      content: " • Check-out: 343 Kensington High St, antes de las 11:00.\n • Traslado al aeropuerto: Tube District/Circle Line hasta Earls Court, luego Piccadilly Line hasta Heathrow, o taxi/Uber.\n • Vuelo: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n • Código de reserva: XQOSQR.\n • Llegar a Heathrow al menos 3 horas antes del vuelo."
-      }
-    ],
-  blocksEn: [
-      {
-      header: "CHECK-OUT AND RETURN",
-      content: " • Check-out: 343 Kensington High St, before 11:00.\n • Airport transfer: Tube District/Circle Line to Earls Court, then Piccadilly Line to Heathrow, or taxi/Uber.\n • Flight: British Airways BA0249, Heathrow 22:10, Ezeiza 11:50 (+1).\n • Booking code: XQOSQR.\n • Arrive at Heathrow at least 3 hours before your flight."
-      }
-    ]
-  },
-  {
-  city: 'neutral',
-  title: "Miércoles 3/12 - DIA 17",
-  enTitle: "Wednesday, 3 December 2025 - DAY 17",
-  blocks: [
-      {
-      header: "LLEGADA A BUENOS AIRES",
-      content: " • Llegada vuelo BA0249 a Ezeiza: 11:50 hs.\n • Fin del viaje!"
-      }
-    ],
-  blocksEn: [
-      {
-      header: "ARRIVAL IN BUENOS AIRES",
-      content: " • Arrival of flight BA0249 at Ezeiza: 11:50 am.\n • End of the trip!"
-      }
-    ]
-  },
-  {
-    "city": "neutral",
-    "title": "RECORRIDOS A PIE",
-    "enTitle": "WALKING ROUTES",
-    "blocks": [
-      {
-        "header": "LONDRES RECORRIDO NORTE",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-        "header": "KENSINGTON Y MUSEOS",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-        "header": "LONDRES · DEPARTAMENTALES Y BUCKINGHAM",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-        "header": "LONDRES · CENTRO",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-        "header": "LONDRES · HIGHGATE CEMETERY Y RECORRIDO NORTE",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-        "header": "EDIMBURGO · AFUERAS",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>ABRIR EN MAPS</a>"
-      },
-      {
-        "header": "EDIMBURGO · EN AUTO",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>ABRIR EN MAPS</a>"
-      }
-    ],
-    "blocksEn": [
-      {
-        "header": "LONDON NORTHERN PATH",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=135tolSwSNhQHUB7LGO-p17oovD2cacc\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/RPpSF8MfwvzU36V99' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-        "header": "KENSINGTON AND MUSEUMS",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1_kIkeri_J1xkwfHVoBNbLgklDodb_oc\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/99iH231bfqtVqrhB7' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-        "header": "LONDON · DEPARTAMENT STORES AND BUCKINGHAM",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ysXe75EtfSHL_35a22BnmDmIAXr9me4\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/MhChcEtaKTDCtXQx8' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-        "header": "LONDON · DOWNTOWN",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1u3Fnf2vLCMTv-Qdv0BOTzGXbhJDfKH8\')\">Open walk in modal</a>  <a  href='https://maps.app.goo.gl/mg1tSA6xZuBRqXp37' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-        "header": "LONDRES · HIGHGATE CEMETERY AND NORTHERN PATHS",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1ga7sI22YuKHmydNszP1-tExbUpBwk2M\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/2WFzcHQcYmyednbg7' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-        "header": "EDINBOURGH · OUTTER WALKS",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1LrspYBWOcOgYG7VmxwN-MgZ3WIwGBAk\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/RcTH3KQTg5SooMtx5' target='_blank'>OPEN IN MAPS</a>"
-      },
-      {
-        "header": "EDIMBURGO · ROADTRIP",
-        "content": "<a href='#' onclick=\"openMap(\'https://www.google.com/maps/d/embed?mid=1XzGfQLRZokg-XSY6si0PcXaGNF3TK_g\')\">Ver recorrido</a>  <a  href='https://maps.app.goo.gl/8qF2pfQ7NqsNMN267' target='_blank'>OPEN IN MAPS</a>"
-      }
-    ]
-  }
-];
+    ];
 
     let current = 0, showEnglish = false;
     const card = document.getElementById('itinerary-card');
@@ -835,120 +904,125 @@ margin-top: 0.5rem;
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.body.classList.add('dark');
     }
-  
-function openMap(url) {
-  const modal = document.getElementById('map-modal');
-  const iframe = document.getElementById('map-iframe');
-  iframe.src = url;
-  modal.style.display = 'flex';
-}
-function closeMap() {
-  const modal = document.getElementById('map-modal');
-  const iframe = document.getElementById('map-iframe');
-  iframe.src = '';
-  modal.style.display = 'none';
-}
+
+    function openMap(url) {
+      const modal = document.getElementById('map-modal');
+      const iframe = document.getElementById('map-iframe');
+      iframe.src = url;
+      modal.style.display = 'flex';
+    }
+    function closeMap() {
+      const modal = document.getElementById('map-modal');
+      const iframe = document.getElementById('map-iframe');
+      iframe.src = '';
+      modal.style.display = 'none';
+    }
 
 
 
-function searchDay() {
-  const input = document.getElementById('searchInput').value.toLowerCase();
-  if (!input) return;
-  for (let i = 0; i < days.length; i++) {
-    const blocks = showEnglish ? days[i].blocksEn : days[i].blocks;
-    for (let b of blocks) {
-      if (b.content.toLowerCase().includes(input) || b.header.toLowerCase().includes(input)) {
-        current = i;
-        render();
-        return;
+    function searchDay() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      if (!input) return;
+      for (let i = 0; i < days.length; i++) {
+        const blocks = showEnglish ? days[i].blocksEn : days[i].blocks;
+        for (let b of blocks) {
+          if (b.content.toLowerCase().includes(input) || b.header.toLowerCase().includes(input)) {
+            current = i;
+            render();
+            return;
+          }
+        }
       }
     }
-  }
-}
 
 
 
-function toggleDayList() {
-  const dayList = document.getElementById('dayList');
-  if (dayList.style.display === 'none') {
-    let html = '';
-    for (let i = 0; i < days.length; i++) {
-      const title = showEnglish ? days[i].enTitle : days[i].title;
-      html += `<div style='padding: 0.25rem 0; cursor: pointer;' onclick='jumpToDay(${i})'>${title}</div>`;
+    function toggleDayList() {
+      const dayList = document.getElementById('dayList');
+      if (dayList.style.display === 'none') {
+        let html = '';
+        for (let i = 0; i < days.length; i++) {
+          const title = showEnglish ? days[i].enTitle : days[i].title;
+          html += `<div style='padding: 0.25rem 0; cursor: pointer;' onclick='jumpToDay(${i})'>${title}</div>`;
+        }
+        dayList.innerHTML = html;
+        dayList.style.display = 'block';
+      } else {
+        dayList.style.display = 'none';
+      }
     }
-    dayList.innerHTML = html;
-    dayList.style.display = 'block';
-  } else {
-    dayList.style.display = 'none';
-  }
-}
-function jumpToDay(index) {
-  current = index;
-  render();
-  document.getElementById('dayList').style.display = 'none';
-}
+    function jumpToDay(index) {
+      current = index;
+      render();
+      document.getElementById('dayList').style.display = 'none';
+    }
 
 
 
-document.addEventListener('click', function(event) {
-  const dayList = document.getElementById('dayList');
-  const toggleBtn = event.target.closest('button');
-  const isInsideMenu = event.target.closest('#dayList');
-  if (!isInsideMenu && (!toggleBtn || toggleBtn.textContent !== '☰')) {
-    dayList.style.display = 'none';
-  }
-});
+    document.addEventListener('click', function (event) {
+      const dayList = document.getElementById('dayList');
+      const toggleBtn = event.target.closest('button');
+      const isInsideMenu = event.target.closest('#dayList');
+      if (!isInsideMenu && (!toggleBtn || toggleBtn.textContent !== '☰')) {
+        dayList.style.display = 'none';
+      }
+    });
 
 
-// Detectar día actual y posicionar si hay coincidencia
-function getTodayIndex() {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const yyyy = today.getFullYear();
-  const todayStr = `${dd}/${mm}/${yyyy}`;
-  console.log("📅 Buscando día:", todayStr);
-  return days.findIndex(day => day.title.includes(todayStr));
-}
+    // Detectar día actual y posicionar si hay coincidencia
+    function getTodayIndex() {
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+      const todayStr = `${dd}/${mm}/${yyyy}`;
+      console.log("📅 Buscando día:", todayStr);
+      return days.findIndex(day => day.title.includes(todayStr));
+    }
 
-window.addEventListener("load", () => {
-  console.log("🚀 Script de auto-scroll ejecutado");
-  const idx = getTodayIndex();
-  if (idx !== -1) {
-    current = idx;
-    console.log("✅ Día encontrado en índice:", idx);
-  } else {
-    console.log("❌ Día no encontrado en titles.");
-  }
-  render();
-});
+    window.addEventListener("load", () => {
+      console.log("🚀 Script de auto-scroll ejecutado");
+      const idx = getTodayIndex();
+      if (idx !== -1) {
+        current = idx;
+        console.log("✅ Día encontrado en índice:", idx);
+      } else {
+        console.log("❌ Día no encontrado en titles.");
+      }
+      render();
+    });
 
-</script>
-<div class="modal hidden" id="map-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 99999;">
-<div class="modal-content" style="position: relative; width: 90vw; height: 80vh; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
-<span class="close-btn" onclick="closeMap()" style="position: absolute; top: 10px; right: 16px; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: #444; z-index: 10;">×</span>
-<iframe allowfullscreen="" height="100%" id="map-iframe" loading="lazy" style="border:0;" width="100%"></iframe>
-</div>
-</div>
-<script>
-// Obtener parámetro desde URL
-function getUrlParameter(name) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var url = new URL(window.location.href);
-    var params = new URLSearchParams(url.search);
-    return params.get(name);
-}
+  </script>
+  <div class="modal hidden" id="map-modal"
+    style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 99999;">
+    <div class="modal-content"
+      style="position: relative; width: 90vw; height: 80vh; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+      <span class="close-btn" onclick="closeMap()"
+        style="position: absolute; top: 10px; right: 16px; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: #444; z-index: 10;">×</span>
+      <iframe allowfullscreen="" height="100%" id="map-iframe" loading="lazy" style="border:0;" width="100%"></iframe>
+    </div>
+  </div>
+  <script>
+    // Obtener parámetro desde URL
+    function getUrlParameter(name) {
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var url = new URL(window.location.href);
+      var params = new URLSearchParams(url.search);
+      return params.get(name);
+    }
 
-// Cargar día específico al cargar la página
-window.addEventListener('load', () => {
-    const dia = getUrlParameter('dia');
-    if (dia !== null) {
+    // Cargar día específico al cargar la página
+    window.addEventListener('load', () => {
+      const dia = getUrlParameter('dia');
+      if (dia !== null) {
         const diaIdx = parseInt(dia, 10);
         if (!isNaN(diaIdx) && diaIdx >= 0 && diaIdx < days.length) {
-            current = diaIdx;
-            render();
+          current = diaIdx;
+          render();
         }
-    }
-});
-</script></body>
+      }
+    });
+  </script>
+</body>
+
 </html>
