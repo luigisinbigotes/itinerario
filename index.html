@@ -89,6 +89,45 @@
     }
 
     window.addEventListener("load", () => {
+      document.getElementById('todayBtn').onclick = () => {
+        const idx = getTodayIndex();
+        if (idx === -1) {
+          alert("Hoy no coincide con ningún día del itinerario.");
+          return;
+        }
+        if (idx === current) {
+          alert("Ya estás en el día de hoy.");
+          return;
+        }
+        current = idx;
+        render();
+      };
+
+      document.getElementById('prev').onclick = prevDay;
+      document.getElementById('next').onclick = nextDay;
+      
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowLeft') {
+          prevDay();
+        } else if (event.key === 'ArrowRight') {
+          nextDay();
+        }
+      });
+
+      const dia = getUrlParameter('dia');
+      if (dia !== null) {
+        const diaIdx = parseInt(dia, 10);
+        if (!isNaN(diaIdx) && diaIdx >= 0 && diaIdx < days.length) {
+          current = diaIdx;
+        } else {
+          const idx = getTodayIndex();
+          if (idx !== -1) current = idx;
+        }
+      } else {
+        const idx = getTodayIndex();
+        if (idx !== -1) current = idx;
+      }
+    
       console.log("🚀 Script de auto-scroll ejecutado");
       const idx = getTodayIndex();
       if (idx !== -1) {
@@ -100,7 +139,31 @@
       render();
     });
 
-  </script>
+  
+  
+
+
+  // Swipe por trackpad (MacBook) usando wheel horizontal con control de repetición
+  if (!window._swipeConfigured) {
+    window._swipeConfigured = true;
+    let lastSwipeTime = 0;
+    document.addEventListener('wheel', function(event) {
+      const now = Date.now();
+      if (now - lastSwipeTime < 500) return;
+
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+        if (event.deltaX > 40) {
+          nextDay();
+          lastSwipeTime = now;
+        } else if (event.deltaX < -40) {
+          prevDay();
+          lastSwipeTime = now;
+        }
+      }
+    }, { passive: true });
+  }
+
+</script>
   <style>
     * {
       -webkit-tap-highlight-color: transparent;
@@ -118,7 +181,7 @@
       --text-light: #131313;
       --text-dark: #222a2e;
       --border-width: 10px;
-      --controls-height: 60px;
+      --controls-height: 72px;
     }
 
     html,
@@ -305,7 +368,27 @@
         font-size: 0.9em;
       }
     }
-  </style>
+  
+#todayBtn {
+  min-height: 48px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#todayBtn, #prev, #next {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#todayBtn:hover, #prev:hover, #next:hover {
+  background-color: #444;
+}
+</style>
 </head>
 
 <body>
@@ -882,8 +965,7 @@ margin-top: 0.5rem;
     const card = document.getElementById('itinerary-card');
     const contentDiv = card.querySelector('.content');
     const controlsWrapper = document.getElementById('controls-wrapper');
-    const toggleBtn = document.getElementById('toggleLangBtn');
-
+    
     function render() {
       if (days.length === 0) {
         contentDiv.innerHTML = '<p>No hay contenido disponible</p>';
@@ -897,8 +979,7 @@ margin-top: 0.5rem;
         html += `<h3>${block.header}</h3><div class="block">${block.content.replace(/\n/g, '<br>')}</div>`;
       }
       contentDiv.innerHTML = html;
-      toggleBtn.textContent = showEnglish ? 'Ver en español' : 'Ver en English';
-      controlsWrapper.classList.toggle('dark', document.body.classList.contains('dark'));
+            controlsWrapper.classList.toggle('dark', document.body.classList.contains('dark'));
     }
 
     function prevDay() {
@@ -912,18 +993,12 @@ margin-top: 0.5rem;
       render();
     }
 
-    document.getElementById('prev').onclick = prevDay;
-    document.getElementById('next').onclick = nextDay;
-    toggleBtn.onclick = toggleLang;
-    document.getElementById('todayBtn').onclick = () => {
-      const idx = getTodayIndex();
-      if (idx !== -1) {
-        current = idx;
-        render();
-      } else {
-        alert("Hoy no coincide con ningún día del itinerario.");
-      }
-    };
+    
+    
+    
+    
+    
+    
 
     render();
 
@@ -1015,6 +1090,31 @@ margin-top: 0.5rem;
     }
 
     window.addEventListener("load", () => {
+      document.getElementById('todayBtn').onclick = () => {
+        const idx = getTodayIndex();
+        if (idx === -1) {
+          alert("Hoy no coincide con ningún día del itinerario.");
+          return;
+        }
+        if (idx === current) {
+          alert("Ya estás en el día de hoy.");
+          return;
+        }
+        current = idx;
+        render();
+      };
+
+      document.getElementById('prev').onclick = prevDay;
+      document.getElementById('next').onclick = nextDay;
+      
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowLeft') {
+          prevDay();
+        } else if (event.key === 'ArrowRight') {
+          nextDay();
+        }
+      });
+
       console.log("🚀 Script de auto-scroll ejecutado");
       const idx = getTodayIndex();
       if (idx !== -1) {
@@ -1026,16 +1126,33 @@ margin-top: 0.5rem;
       render();
     });
 
-    // Soporte para flechas izquierda/derecha del teclado
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'ArrowLeft') {
-        prevDay();
-      } else if (event.key === 'ArrowRight') {
-        nextDay();
-      }
-    });
+    
 
-  </script>
+  
+  
+
+
+  // Swipe por trackpad (MacBook) usando wheel horizontal con control de repetición
+  if (!window._swipeConfigured) {
+    window._swipeConfigured = true;
+    let lastSwipeTime = 0;
+    document.addEventListener('wheel', function(event) {
+      const now = Date.now();
+      if (now - lastSwipeTime < 500) return;
+
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+        if (event.deltaX > 40) {
+          nextDay();
+          lastSwipeTime = now;
+        } else if (event.deltaX < -40) {
+          prevDay();
+          lastSwipeTime = now;
+        }
+      }
+    }, { passive: true });
+  }
+
+</script>
   <div class="modal hidden" id="map-modal"
     style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 99999;">
     <div class="modal-content"
@@ -1054,18 +1171,32 @@ margin-top: 0.5rem;
       return params.get(name);
     }
 
-    // Cargar día específico al cargar la página
-    window.addEventListener('load', () => {
-      const dia = getUrlParameter('dia');
-      if (dia !== null) {
-        const diaIdx = parseInt(dia, 10);
-        if (!isNaN(diaIdx) && diaIdx >= 0 && diaIdx < days.length) {
-          current = diaIdx;
-          render();
+    
+  
+  
+
+
+  // Swipe por trackpad (MacBook) usando wheel horizontal con control de repetición
+  if (!window._swipeConfigured) {
+    window._swipeConfigured = true;
+    let lastSwipeTime = 0;
+    document.addEventListener('wheel', function(event) {
+      const now = Date.now();
+      if (now - lastSwipeTime < 500) return;
+
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+        if (event.deltaX > 40) {
+          nextDay();
+          lastSwipeTime = now;
+        } else if (event.deltaX < -40) {
+          prevDay();
+          lastSwipeTime = now;
         }
       }
-    });
-  </script>
+    }, { passive: true });
+  }
+
+</script>
 </body>
 
 </html>
